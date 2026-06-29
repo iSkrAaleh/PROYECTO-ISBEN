@@ -1,0 +1,21 @@
+# Entornos virtuales
+venv/
+env/
+.env
+
+# Archivos de Python (caché)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Base de datos local de SQLite (generalmente no se sube para evitar conflictos y borrar datos de otros)
+*.sqlite3
+db.sqlite3
+
+# Archivos de sistema operativo
+.DS_Store
+Thumbs.db
+
+# Configuración de editores (VS Code, etc.)
+.vscode/
+.idea/
