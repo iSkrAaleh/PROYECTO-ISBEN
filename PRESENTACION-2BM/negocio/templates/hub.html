@@ -1,0 +1,52 @@
+{% extends "master.html" %}
+
+{% block title %}Hub - ISBEN Solutions{% endblock %}
+
+{% block content %}
+<div style="text-align: center;">
+    <h2 style="color: #FB4318;">Bienvenido al Hub, {{ request.session.correo }}</h2>
+    <p>Tipo de Cuenta: <strong>{{ request.session.tipo_usuario }}</strong></p>
+</div>
+
+<div class="hub-cards">
+    {% if request.session.tipo_usuario == 'Empresa' %}
+        <div class="card">
+            <h3>Gestión de Empresa</h3>
+            <p>Visualiza el estado de verificación y los límites de compra.</p>
+            <a href="#" class="btn">Ver Detalles</a>
+        </div>
+        <div class="card">
+            <h3>Suscripciones</h3>
+            <p>Administra los planes y pagos de la empresa.</p>
+            <a href="#" class="btn">Ver Suscripciones</a>
+        </div>
+    {% elif request.session.tipo_usuario == 'Vendedor' %}
+        <div class="card">
+            <h3>Panel de Vendedor</h3>
+            <p>Revisa el estado de aprobación y notas de capacitación.</p>
+            <a href="#" class="btn">Ver Panel</a>
+        </div>
+        <div class="card">
+            <h3>Rutas Asignadas</h3>
+            <p>Organiza tus visitas a tenderos.</p>
+            <a href="#" class="btn">Ver Rutas</a>
+        </div>
+    {% elif request.session.tipo_usuario == 'Tendero' %}
+        <div class="card">
+            <h3>Mi Negocio</h3>
+            <p>Actualiza la información de tu local.</p>
+            <a href="#" class="btn">Gestionar Negocio</a>
+        </div>
+        <div class="card">
+            <h3>Catálogo ISBEN</h3>
+            <p>Explora los productos disponibles.</p>
+            <a href="#" class="btn">Ver Catálogo</a>
+        </div>
+    {% else %}
+        <div class="card">
+            <h3>Información</h3>
+            <p>No se ha detectado el tipo de usuario correctamente.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

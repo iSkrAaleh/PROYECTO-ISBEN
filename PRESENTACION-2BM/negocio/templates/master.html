@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+    <title>
+      {% block title %}ISBEN Solutions{% endblock %}
+    </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/estilos.css' %}">
+</head>
+<body>
+    <header>
+        <img src="{% static 'imagenes/logotigresolologo.png' %}" alt="ISBEN Logo">
+        <h1>ISBEN Solutions</h1>
+        
+        <nav class="top_menu">
+            <ul>
+                {% if request.session.usuario_id %}
+                    <li><span style="color: white; padding-right: 15px; font-weight: bold;">{{ request.session.tipo_usuario }} | {{ request.session.correo }}</span></li>
+                    <li><a href="{% url 'hub' %}">Inicio</a></li>
+                    <li><a href="{% url 'logout' %}">Salir</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Ingresar</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <span{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</span>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <section class="content">
+        {% block content %}
+        {% endblock %}
+    </section>
+
+    <footer>
+        <p>Proyecto ISBEN - 2BM</p>
+        <p>{% now "j F Y" %}</p>
+    </footer>
+</body>
+</html>
