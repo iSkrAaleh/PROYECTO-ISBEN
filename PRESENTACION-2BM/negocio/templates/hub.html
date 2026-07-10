@@ -3,50 +3,91 @@
 {% block title %}Hub - ISBEN Solutions{% endblock %}
 
 {% block content %}
-<div style="text-align: center;">
-    <h2 style="color: #FB4318;">Bienvenido al Hub, {{ request.session.correo }}</h2>
-    <p>Tipo de Cuenta: <strong>{{ request.session.tipo_usuario }}</strong></p>
-</div>
+<div class="container" style="max-width: 1000px; margin-top: 20px; margin-bottom: 50px;">
 
-<div class="hub-cards">
-    {% if request.session.tipo_usuario == 'Empresa' %}
-        <div class="card">
-            <h3>Gestión de Empresa</h3>
-            <p>Visualiza el estado de verificación y los límites de compra.</p>
-            <a href="#" class="btn">Ver Detalles</a>
+  <div class="text-center mb-5" style="color: white;">
+    <h2 style="font-weight: 800; font-size: 2.5rem;">Panel Principal</h2>
+    <p style="font-size: 1.1rem; opacity: 0.9;">Bienvenido, <strong>{{ nombre_usuario }}</strong>. Tipo de Cuenta:
+      <strong>{{ tipo_usuario }}</strong></p>
+  </div>
+
+  <div class="row gy-4">
+
+    {% if tipo_usuario == 'Empresa' %}
+    <div class="col-md-6">
+      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
+        <h3 style="color: #FB4318; font-weight: 700;">Gestión de Empresa</h3>
+        <p style="margin-bottom: 25px;">Visualiza el estado de verificación y los límites de compra.</p>
+        <div class="mt-auto" style="width: 100%;">
+          <a href="#" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Ver Detalles</a>
         </div>
-        <div class="card">
-            <h3>Suscripciones</h3>
-            <p>Administra los planes y pagos de la empresa.</p>
-            <a href="#" class="btn">Ver Suscripciones</a>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
+        <h3 style="color: #FB4318; font-weight: 700;">Suscripciones</h3>
+        <p style="margin-bottom: 25px;">Administra los planes y pagos de la empresa.</p>
+        <div class="mt-auto" style="width: 100%;">
+          <a href="#" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Ver
+            Suscripciones</a>
         </div>
-    {% elif request.session.tipo_usuario == 'Vendedor' %}
-        <div class="card">
-            <h3>Panel de Vendedor</h3>
-            <p>Revisa el estado de aprobación y notas de capacitación.</p>
-            <a href="#" class="btn">Ver Panel</a>
+      </div>
+    </div>
+
+    {% elif tipo_usuario == 'Vendedor' %}
+    <div class="col-md-6">
+      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
+        <h3 style="color: #FB4318; font-weight: 700;">Panel de Vendedor</h3>
+        <p style="margin-bottom: 25px;">Revisa el estado de aprobación y notas de capacitación.</p>
+        <div class="mt-auto" style="width: 100%;">
+          <a href="#" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Ver Panel</a>
         </div>
-        <div class="card">
-            <h3>Rutas Asignadas</h3>
-            <p>Organiza tus visitas a tenderos.</p>
-            <a href="#" class="btn">Ver Rutas</a>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
+        <h3 style="color: #FB4318; font-weight: 700;">Rutas Asignadas</h3>
+        <p style="margin-bottom: 25px;">Organiza tus visitas a tenderos.</p>
+        <div class="mt-auto" style="width: 100%;">
+          <a href="#" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Ver Rutas</a>
         </div>
-    {% elif request.session.tipo_usuario == 'Tendero' %}
-        <div class="card">
-            <h3>Mi Negocio</h3>
-            <p>Actualiza la información de tu local.</p>
-            <a href="#" class="btn">Gestionar Negocio</a>
+      </div>
+    </div>
+
+    {% elif tipo_usuario == 'Tendero' %}
+    <div class="col-md-6">
+      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
+        <h3 style="color: #FB4318; font-weight: 700;">Mi Negocio</h3>
+        <p style="margin-bottom: 25px;">Actualiza la información de tu local.</p>
+        <div class="mt-auto" style="width: 100%;">
+          <a href="#" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Gestionar
+            Negocio</a>
         </div>
-        <div class="card">
-            <h3>Catálogo ISBEN</h3>
-            <p>Explora los productos disponibles.</p>
-            <a href="#" class="btn">Ver Catálogo</a>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
+        <h3 style="color: #FB4318; font-weight: 700;">Catálogo ISBEN</h3>
+        <p style="margin-bottom: 25px;">Explora los productos disponibles.</p>
+        <div class="mt-auto" style="width: 100%;">
+          <a href="#" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Ver Catálogo</a>
         </div>
+      </div>
+    </div>
+
     {% else %}
-        <div class="card">
-            <h3>Información</h3>
-            <p>No se ha detectado el tipo de usuario correctamente.</p>
-        </div>
+    <div class="col-md-12">
+      <div class="glass-card" style="padding: 40px; text-align: center;">
+        <h3 style="color: #FB4318; font-weight: 700;">Información</h3>
+        <p>No se ha detectado un rol de Empresa, Vendedor o Tendero asociado a este usuario. Rol actual: Administrador u
+          otro.</p>
+      </div>
+    </div>
     {% endif %}
+
+  </div>
 </div>
 {% endblock %}

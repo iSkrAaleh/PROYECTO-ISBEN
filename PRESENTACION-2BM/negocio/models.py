@@ -1,36 +1,31 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-class Usuario(models.Model):
-    correo_electronico = models.CharField(max_length=150)
-    password_hash = models.CharField(max_length=255)
-    rol_sistema = models.CharField(max_length=50)
-    fecha_registro = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        abstract = True
-
-class Empresa(Usuario):
+class Empresa(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, related_name="empresa")
+    telefono = models.CharField(max_length=20, default="")
     ruc = models.CharField(max_length=20)
     razon_social = models.CharField(max_length=150)
     representante_legal = models.CharField(max_length=100)
-    telefono_contacto = models.CharField(max_length=20)
     limite_compra_minimo = models.FloatField()
     estado_verificacion = models.BooleanField(default=False)
 
     def __str__(self):
         return "%s %s %s" % (self.ruc, self.razon_social, self.representante_legal)
 
-class Vendedor(Usuario):
+class Vendedor(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, related_name="vendedor")
+    telefono = models.CharField(max_length=20, default="")
     cedula = models.CharField(max_length=20)
-    nombres_apellidos = models.CharField(max_length=150)
-    telefono_movil = models.CharField(max_length=20)
     nota_capacitacion = models.FloatField(default=0.0)
     estado_aprobacion = models.BooleanField(default=False)
 
     def __str__(self):
-        return "%s %s" % (self.cedula, self.nombres_apellidos)
+        return "%s %s %s" % (self.cedula, self.usuario.first_name, self.usuario.last_name)
 
-class Tendero(Usuario):
+class Tendero(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, related_name="tendero")
+    telefono = models.CharField(max_length=20, default="")
     nombre_local = models.CharField(max_length=100)
     direccion_fisica = models.CharField(max_length=255)
     ruc_negocio = models.CharField(max_length=20)
@@ -65,7 +60,7 @@ class Producto(models.Model):
         return "%s %s %.2f" % (self.codigo_sku, self.nombre_producto, self.precio_mayorista)
 
 class Pedido(models.Model):
-    fecha_hora_emision = models.DateTimeField(auto_now_add=True)
+    fecha_hora_emision = models.DateTimeField()
     subtotal_pedido = models.FloatField(default=0.0)
     total_pedido = models.FloatField(default=0.0)
     estado_pedido = models.CharField(max_length=50)

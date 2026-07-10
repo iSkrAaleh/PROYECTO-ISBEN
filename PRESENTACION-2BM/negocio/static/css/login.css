@@ -1,0 +1,208 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    /* Fondo principal vibrante en tonos naranjas y amarillos */
+    background: linear-gradient(135deg, #FB4318 0%, #FFC22F 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    align-items: center;
+}
+
+/* Barra de navegación (Arriba) */
+.nav-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 20px;
+    gap: 40px;
+    width: 100%;
+}
+
+.nav-main a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nav-main a:hover {
+    color: #333;
+}
+
+.nav-main .logo {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+/* Cuerpo Principal Centrado */
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+}
+
+/* Tarjeta de Glassmorphism */
+.glass-card {
+    background-color: rgba(255, 255, 255, 0.95); /* Blanco ligeramente translúcido */
+    padding: 60px 50px;
+    width: 100%;
+    max-width: 450px;
+    border-radius: 40px; /* Bordes muy redondeados */
+    box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(10px); /* Efecto vidrio moderno */
+    transition: transform 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+}
+
+.logo-img {
+    max-width: 220px;
+    height: auto;
+    margin-bottom: 35px;
+}
+
+/* Formulario bonito y moderno */
+form {
+    width: 100%;
+}
+
+.form-control {
+    border-radius: 30px;
+    padding: 15px 25px;
+    border: 2px solid #f0f0f0;
+    background-color: #f9f9f9;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    width: 100%;
+    transition: 0.3s;
+}
+
+.form-control:focus {
+    border-color: #FFC22F;
+    background-color: white;
+    box-shadow: 0 0 15px rgba(255, 194, 47, 0.2);
+}
+
+.btn-login {
+    background: linear-gradient(90deg, #FB4318, #FFC22F); /* Combina con el fondo */
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 10px 20px rgba(251, 67, 24, 0.3);
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 25px rgba(251, 67, 24, 0.5);
+    color: white;
+}
+
+/* Logo superior y su menú desplegable */
+.dropdown-logo {
+    position: absolute;
+    top: 20px;
+    right: 30px; /* Movido a la derecha */
+    z-index: 1000;
+    padding-bottom: 15px; /* Crea un puente invisible para que no se pierda el mouse */
+}
+
+.top-left-logo {
+    background-color: white;
+    padding: 10px 15px;
+    border-radius: 15px; /* Cuadrado con puntas ovaladas */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.top-left-logo:hover {
+    transform: scale(1.05);
+}
+
+.top-left-logo img {
+    height: 45px; /* Ajusta el tamaño del tigre */
+    width: auto;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 70px; /* Ajustado para que toque el puente invisible */
+    right: 0;  /* Alineado a la derecha para no salirse de la pantalla */
+    background-color: rgba(255, 255, 255, 0.95);
+    min-width: 220px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    padding: 10px 0;
+    backdrop-filter: blur(10px);
+}
+
+/* Mostrar el menú al pasar el mouse */
+.dropdown-logo:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 12px 20px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: 0.2s;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #f4f4f9;
+    color: #FB4318;
+}
+
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 768px) {
+    .nav-main {
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 20px;
+    }
+    .nav-main .logo {
+        order: -1;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .glass-card {
+        padding: 40px 30px;
+        border-radius: 30px;
+    }
+    .logo-img {
+        max-width: 180px;
+    }
+}

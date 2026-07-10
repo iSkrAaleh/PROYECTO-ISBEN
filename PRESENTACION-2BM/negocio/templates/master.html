@@ -1,48 +1,69 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {% load static %}
-    <title>
-      {% block title %}ISBEN Solutions{% endblock %}
-    </title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/estilos.css' %}">
-</head>
-<body>
-    <header>
-        <img src="{% static 'imagenes/logotigresolologo.png' %}" alt="ISBEN Logo">
-        <h1>ISBEN Solutions</h1>
-        
-        <nav class="top_menu">
-            <ul>
-                {% if request.session.usuario_id %}
-                    <li><span style="color: white; padding-right: 15px; font-weight: bold;">{{ request.session.tipo_usuario }} | {{ request.session.correo }}</span></li>
-                    <li><a href="{% url 'hub' %}">Inicio</a></li>
-                    <li><a href="{% url 'logout' %}">Salir</a></li>
-                {% else %}
-                    <li><a href="{% url 'login' %}">Ingresar</a></li>
-                {% endif %}
-            </ul>
-        </nav>
-    </header>
 
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  {% load static %}
+  <title>
+    {% block title %}ISBEN Solutions{% endblock %}
+  </title>
+
+  <link href="{% static 'imagenes/logotigresolologo.png' %}" rel="icon">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'css/login.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- logo superior izquierdo y menu desplegable -->
+  <div class="dropdown-logo">
+    <a href="{% url 'hub' %}" class="top-left-logo">
+      <img src="{% static 'imagenes/logotigresolologo.png' %}" alt="ISBEN Logo">
+    </a>
+    {% if request.session.usuario_id %}
+    <div class="dropdown-content">
+      <a href="#">Mi perfil</a>
+      <a href="#">Configuraciones</a>
+      <a href="{% url 'logout' %}" style="color: #FB4318;">Cerrar sesión</a>
+    </div>
+    {% endif %}
+  </div>
+
+  <nav class="nav-main">
+    <a href="{% url 'hub' %}">Inicio</a>
+    <a href="#">Nosotros</a>
+    <a href="{% url 'hub' %}" class="logo">ISBEN</a>
+    <a href="#">Blog</a>
+    {% if not request.session.usuario_id %}
+    <a href="{% url 'login' %}">Ingresar</a>
+    {% endif %}
+  </nav>
+
+  <main class="main-content" style="flex-direction: column;">
     {% if messages %}
-        <div class="messages">
-            {% for message in messages %}
-                <span{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</span>
-            {% endfor %}
-        </div>
+    <div class="container mt-3" style="max-width: 600px;">
+      {% for message in messages %}
+      <div class="alert alert-info" role="alert" style="border-radius: 20px; text-align: center;">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
     {% endif %}
 
-    <section class="content">
-        {% block content %}
-        {% endblock %}
-    </section>
+    {% block content %}
+    {% endblock %}
+  </main>
 
-    <footer>
-        <p>Proyecto ISBEN - 2BM</p>
-        <p>{% now "j F Y" %}</p>
-    </footer>
+  <footer style="color: white; text-align: center; padding: 20px; opacity: 0.9; font-size: 0.9rem;">
+    <p>© <span>Copyright</span> <strong class="px-1 sitename">ISBEN</strong> <span>Todos los derechos reservados.
+        Proyecto 2BM</span></p>
+  </footer>
+
 </body>
+
 </html>

@@ -1,26 +1,30 @@
 {% extends "master.html" %}
+{% load static %}
 
-{% block title %}Ingresar - ISBEN Solutions{% endblock %}
+{% block title %}Iniciar Sesión - ISBEN{% endblock %}
 
 {% block content %}
-<div class="login-box">
-    <h2>Iniciar Sesion</h2>
-    <div style="text-align: center; margin-bottom: 20px;">
-        {% load static %}
-        <img src="{% static 'imagenes/bannerlogosinfondo.png' %}" alt="Banner ISBEN"
-            style="max-width: 100%; height: auto;">
-    </div>
+<!-- tarjeta central de Login -->
+<div class="glass-card mt-4">
+
+    <!-- logo principal de isben sin fondo -->
+    <img src="{% static 'imagenes/bannerlogosinfondo.png' %}" alt="ISBEN Logo" class="logo-img">
+
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
-        <div class="form-group">
-            <label for="correo">Correo Electrónico:</label>
-            <input type="email" name="correo" id="correo" required>
+        <div class="mb-3">
+            {{ form.username }}
         </div>
-        <div class="form-group">
-            <label for="password">Contraseña:</label>
-            <input type="password" name="password" id="password" required>
+        <div class="mb-3">
+            {{ form.password }}
         </div>
-        <button type="submit" class="btn" style="width: 100%;">Ingresar</button>
+        <button type="submit" class="btn-login">Ingresar</button>
     </form>
+
+    <div class="text-center mt-4">
+        <a href="#" style="color: #FB4318; font-size: 0.9rem; font-weight: 600; text-decoration: none;">¿Olvidaste tu
+            contraseña?</a>
+    </div>
+
 </div>
 {% endblock %}
