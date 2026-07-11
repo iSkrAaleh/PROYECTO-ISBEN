@@ -13,9 +13,14 @@
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
         <div class="mb-3">
+            <label
+                style="color: #333; font-weight: 700; margin-bottom: 5px; text-align: left; display: block; padding-left: 10px;">Correo
+                electrónico o Cédula:</label>
             {{ form.username }}
         </div>
         <div class="mb-3">
+            <label
+                style="color: #333; font-weight: 700; margin-bottom: 5px; text-align: left; display: block; padding-left: 10px;">Contraseña:</label>
             {{ form.password }}
         </div>
         <button type="submit" class="btn-login">Ingresar</button>

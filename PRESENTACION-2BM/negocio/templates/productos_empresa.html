@@ -1,0 +1,41 @@
+{% extends "master.html" %}
+
+{% block title %}Mis Productos - ISBEN Solutions{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 1000px; margin-top: 20px; margin-bottom: 50px;">
+    
+    <div class="text-center mb-5" style="color: white;">
+        <h2 style="font-weight: 800; font-size: 2.5rem;">Mi Inventario</h2>
+        <p style="font-size: 1.1rem; opacity: 0.9;">Aquí puedes revisar tu catálogo de productos.</p>
+        <a href="{% url 'hub' %}" class="btn-login" style="display:inline-block; padding: 10px 20px; text-decoration: none; width: auto; font-size: 1rem;">Volver al Panel</a>
+    </div>
+
+    <div class="glass-card" style="max-width: 100%; padding: 40px; box-sizing: border-box;">
+        <table class="table" style="width: 100%; text-align: left; border-collapse: separate; border-spacing: 0 10px;">
+            <thead>
+                <tr style="color: #FB4318; font-weight: 700;">
+                    <th style="padding: 15px;">SKU</th>
+                    <th style="padding: 15px;">Nombre del Producto</th>
+                    <th style="padding: 15px;">Precio (Mayorista)</th>
+                    <th style="padding: 15px;">Stock Disponible</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in productos %}
+                <tr style="background-color: rgba(255, 255, 255, 0.5); transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='rgba(255, 255, 255, 0.8)'" onmouseout="this.style.backgroundColor='rgba(255, 255, 255, 0.5)'">
+                    <td style="padding: 15px; border-radius: 10px 0 0 10px;">{{ p.codigo_sku }}</td>
+                    <td style="padding: 15px; font-weight: 600; color: #333;">{{ p.nombre_producto }}</td>
+                    <td style="padding: 15px; color: #28a745; font-weight: 700;">${{ p.precio_mayorista }}</td>
+                    <td style="padding: 15px; border-radius: 0 10px 10px 0;">{{ p.stock_actual }} un.</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" style="text-align: center; padding: 20px; color: #666;">No has registrado productos todavía.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

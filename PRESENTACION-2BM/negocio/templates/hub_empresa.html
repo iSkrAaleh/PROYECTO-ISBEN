@@ -1,0 +1,58 @@
+{% extends "master.html" %}
+
+{% block title %}Panel de Empresa - ISBEN Solutions{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 1000px; margin-top: 20px; margin-bottom: 50px;">
+
+  <div class="text-center mb-5" style="color: white;">
+    <h2 style="font-weight: 800; font-size: 2.5rem;">Panel de Empresa</h2>
+    <p style="font-size: 1.1rem; opacity: 0.9;">Bienvenido, <strong>{{ nombre_usuario }}</strong>.</p>
+  </div>
+
+  <div class="row gy-4">
+
+    <div class="col-md-4">
+      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
+        <h3 style="color: #FB4318; font-weight: 700;">Gestión de Inventario</h3>
+        <p style="margin-bottom: 25px;">Controla el stock de tus productos en tiempo real.</p>
+        <div class="mt-auto" style="width: 100%;">
+          <a href="{% url 'listar_productos_empresa' %}" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Ver Inventario</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
+        <h3 style="color: #FB4318; font-weight: 700;">Catálogo de Productos</h3>
+        <p style="margin-bottom: 25px;">Añade o modifica los productos que ofreces.</p>
+        <div class="mt-auto" style="width: 100%;">
+          <a href="#" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Ver Productos</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
+        <h3 style="color: #FB4318; font-weight: 700;">Recepción de Pedidos</h3>
+        <p style="margin-bottom: 25px;">Revisa los pedidos realizados por tenderos o vendedores.</p>
+        <div class="mt-auto" style="width: 100%;">
+          <a href="{% url 'gestionar_pedidos_empresa' %}" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Ver Pedidos</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nueva tarjeta para solicitudes -->
+    <div class="col-md-4">
+      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
+        <h3 style="color: #FB4318; font-weight: 700;">Solicitudes de Vendedores</h3>
+        <p style="margin-bottom: 25px;">Aprueba o rechaza a los vendedores que quieren trabajar contigo.</p>
+        <div class="mt-auto" style="width: 100%;">
+          <a href="{% url 'revisar_solicitudes' %}" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Ver Solicitudes</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "master.html" %}
+{% block content %}
+<div class="container" style="max-width: 1000px; margin-top: 20px;">
+  <div class="mb-4">
+    <a href="{% url 'hub' %}" class="btn btn-light" style="border-radius: 20px; font-weight: bold; padding: 8px 20px; color: #FB4318; display: inline-flex; align-items: center; text-decoration: none;">
+      <i class="bi bi-arrow-left-circle-fill" style="margin-right: 8px; font-size: 1.2rem;"></i> Volver al Panel
+    </a>
+  </div>
+  <h2 style="color: white; text-align: center;">Solicitudes de Vendedores</h2>
+  
+  <div class="row gy-4 mt-4">
+    <!-- Un ciclo FOR para mostrar todas las que nos llegaron desde la vista -->
+    {% for sol in solicitudes %}
+    <div class="col-md-4">
+      <div class="glass-card" style="padding: 20px; text-align: center;">
+        <h4 style="color: #FB4318;">Vendedor: {{ sol.vendedor.usuario.username }}</h4>
+        <p style="color: #333; font-weight: bold;">
+          Cédula: {{ sol.vendedor.cedula }}<br>
+          Fecha: {{ sol.fecha_solicitud|date:"d M Y" }}
+        </p>
+        
+        <!-- Botón para Aprobar -->
+        <a href="{% url 'aprobar_solicitud' sol.id %}" class="btn-login" style="padding: 10px; display: block; text-decoration: none; font-weight: bold;">Aprobar Permiso</a>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center" style="color: white;">
+        <h4>No tienes solicitudes pendientes.</h4>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "master.html" %}
+
+{% block title %}Seleccionar Cliente - ISBEN Solutions{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 1000px; margin-top: 20px; margin-bottom: 50px;">
+  
+  <div class="mb-4">
+    <a href="{% url 'seleccionar_empresa' %}" class="btn btn-light" style="border-radius: 20px; font-weight: bold; padding: 8px 20px; color: #FB4318; display: inline-flex; align-items: center; text-decoration: none;">
+      <i class="bi bi-arrow-left-circle-fill" style="margin-right: 8px; font-size: 1.2rem;"></i> Volver a Empresas
+    </a>
+  </div>
+
+  <div class="text-center mb-4" style="color: white;">
+    <h2 style="font-weight: 800; font-size: 2.5rem;">Selecciona tu Cliente</h2>
+    <p style="font-size: 1.1rem; opacity: 0.9;">¿Para cuál tendero vas a registrar el pedido hoy?</p>
+    
+    <!-- Formulario de Búsqueda -->
+    <form method="GET" class="mt-4" style="max-width: 500px; margin: 0 auto; display: flex; gap: 10px;">
+      <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="Buscar por nombre de tienda..." style="border-radius: 8px;">
+      <button type="submit" class="btn-login" style="padding: 10px 20px; border: none; font-weight: bold;">Buscar</button>
+      {% if q %}
+      <a href="{% url 'seleccionar_tendero' empresa_id %}" class="btn btn-light" style="padding: 10px 20px; font-weight: bold;">Ver Todos</a>
+      {% endif %}
+    </form>
+  </div>
+
+  <div class="row gy-4">
+    
+    <!-- Usamos un ciclo FOR como aprendiste en clase para recorrer la lista -->
+    {% for tendero in tenderos %}
+    <div class="col-md-4">
+      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
+        
+        <h3 style="color: #FB4318; font-weight: 700;">{{ tendero.nombre_local }}</h3>
+        <p style="margin-bottom: 25px;">
+          RUC: {{ tendero.ruc_negocio }} <br>
+          Dirección: {{ tendero.direccion_fisica }}
+        </p>
+        
+        <div class="mt-auto" style="width: 100%;">
+          <!-- Conectamos este botón al Paso 2, enviando el ID de la empresa y del tendero -->
+          <a href="{% url 'crear_pedido' empresa_id tendero.id %}" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Seleccionar</a>
+        </div>
+        
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+</div>
+{% endblock %}

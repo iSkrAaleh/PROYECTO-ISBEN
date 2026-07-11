@@ -9,6 +9,7 @@ class Empresa(models.Model):
     representante_legal = models.CharField(max_length=100)
     limite_compra_minimo = models.FloatField()
     estado_verificacion = models.BooleanField(default=False)
+    requiere_aprobacion = models.BooleanField(default=False)
 
     def __str__(self):
         return "%s %s %s" % (self.ruc, self.razon_social, self.representante_legal)
@@ -84,3 +85,18 @@ class DetallePedido(models.Model):
 
     def __str__(self):
         return "%d %.2f" % (self.cantidad_producto, self.precio_unitario_aplicado)
+
+class SolicitudVendedor(models.Model):
+    # Conectamos con el Vendedor y con la Empresa
+    vendedor = models.ForeignKey(Vendedor, on_delete=models.CASCADE, related_name="solicitudes")
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE, related_name="solicitudes_recibidas")
+    
+    # Guardamos la fecha en la que hizo la solicitud
+    fecha_solicitud = models.DateTimeField()
+    
+    # El estado por defecto será "Pendiente" hasta que la empresa lo cambie
+    estado_solicitud = models.CharField(max_length=50, default="Pendiente")
+
+    def __str__(self):
+        # Mantenemos tu estilo exacto para retornar cadenas de texto con %s
+        return "%s a %s - %s" % (self.vendedor.usuario.username, self.empresa.razon_social, self.estado_solicitud)

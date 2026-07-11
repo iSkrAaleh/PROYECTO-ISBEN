@@ -1,0 +1,60 @@
+{% extends "master.html" %}
+{% block content %}
+<div class="container" style="max-width: 1000px; margin-top: 20px; margin-bottom: 50px;">
+  
+  <div class="mb-4">
+    <a href="{% url 'hub' %}" class="btn btn-light" style="border-radius: 20px; font-weight: bold; padding: 8px 20px; color: #FB4318; display: inline-flex; align-items: center; text-decoration: none;">
+      <i class="bi bi-arrow-left-circle-fill" style="margin-right: 8px; font-size: 1.2rem;"></i> Volver al Panel
+    </a>
+  </div>
+
+  <div class="text-center mb-5" style="color: white;">
+    <h2 style="font-weight: 800; font-size: 2.5rem;">Mis Pedidos</h2>
+    <p style="font-size: 1.1rem; opacity: 0.9;">Rastrea el estado de tus compras directas a empresas.</p>
+  </div>
+
+  <div class="row gy-4">
+    {% if pedidos %}
+        {% for pedido in pedidos %}
+        <div class="col-md-6">
+          <div class="glass-card" style="padding: 30px; text-align: left; height: 100%; box-sizing: border-box; position: relative;">
+            
+            <h4 style="color: #FB4318; font-weight: 700; font-size: 1.2rem;">Pedido #{{ pedido.id }}</h4>
+            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px;">{{ pedido.fecha_hora_emision }}</p>
+            
+            <p style="margin-bottom: 5px;"><strong>Total:</strong> ${{ pedido.total_pedido }}</p>
+            <p style="margin-bottom: 15px;"><strong>Vía:</strong> {{ pedido.metodo_generacion }}</p>
+            
+            <!-- Lógica visual de Rastreo de Estados -->
+            <div style="background-color: #f8f9fa; border-radius: 10px; padding: 15px; margin-top: 15px; border-left: 4px solid #FB4318;">
+                <p style="margin-bottom: 5px; font-weight: bold; color: #333;">Estado Actual del Envío:</p>
+                
+                {% if pedido.estado_pedido == 'Recibido por Empresa' %}
+                    <span class="badge bg-secondary" style="font-size: 0.9rem;">Recibido por Empresa (En Cola)</span>
+                {% elif pedido.estado_pedido == 'Preparando Envío' %}
+                    <span class="badge bg-warning text-dark" style="font-size: 0.9rem;">Preparando Envío</span>
+                {% elif pedido.estado_pedido == 'En Camino' %}
+                    <span class="badge bg-primary" style="font-size: 0.9rem;">En Camino a tu Local</span>
+                {% elif pedido.estado_pedido == 'Entregado' %}
+                    <span class="badge bg-success" style="font-size: 0.9rem;">Entregado Exitosamente</span>
+                {% else %}
+                    <span class="badge bg-info" style="font-size: 0.9rem;">{{ pedido.estado_pedido }}</span>
+                {% endif %}
+            </div>
+
+          </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-12 text-center">
+            <div class="glass-card" style="padding: 40px;">
+                <h4 style="color: #FB4318;">Aún no tienes pedidos</h4>
+                <p>Anímate a explorar el catálogo de nuestras empresas asociadas.</p>
+                <a href="{% url 'seleccionar_empresa_tendero' %}" class="btn-login" style="padding: 10px 30px; text-decoration: none;">Ver Catálogo</a>
+            </div>
+        </div>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "master.html" %}
+{% block content %}
+<div class="container" style="max-width: 1000px; margin-top: 20px; margin-bottom: 50px;">
+  
+  <div class="mb-4">
+    <a href="{% url 'hub' %}" class="btn btn-light" style="border-radius: 20px; font-weight: bold; padding: 8px 20px; color: #FB4318; display: inline-flex; align-items: center; text-decoration: none;">
+      <i class="bi bi-arrow-left-circle-fill" style="margin-right: 8px; font-size: 1.2rem;"></i> Volver al Panel
+    </a>
+  </div>
+
+  <div class="text-center mb-5" style="color: white;">
+    <h2 style="font-weight: 800; font-size: 2.5rem;">Empresas Distribuidoras</h2>
+    <p style="font-size: 1.1rem; opacity: 0.9;">Selecciona la empresa a la que deseas comprarle hoy.</p>
+  </div>
+
+  <div class="row gy-4">
+    {% for empresa in empresas %}
+    <div class="col-md-4">
+      <div class="glass-card" style="padding: 30px; text-align: center; height: 100%; box-sizing: border-box;">
+        <h3 style="color: #FB4318; font-weight: 700;">{{ empresa.razon_social }}</h3>
+        
+        <div class="mt-4">
+            <a href="{% url 'catalogo_tendero' empresa.id %}" class="btn-login" style="padding: 10px; display: block; text-decoration: none;">Ver Productos</a>
+        </div>
+
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

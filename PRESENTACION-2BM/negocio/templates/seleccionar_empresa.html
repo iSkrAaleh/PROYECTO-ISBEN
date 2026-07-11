@@ -1,0 +1,46 @@
+{% extends "master.html" %}
+{% block content %}
+<div class="container" style="max-width: 1000px; margin-top: 20px; margin-bottom: 50px;">
+  
+  <div class="mb-4">
+    <a href="{% url 'hub' %}" class="btn btn-light" style="border-radius: 20px; font-weight: bold; padding: 8px 20px; color: #FB4318; display: inline-flex; align-items: center; text-decoration: none;">
+      <i class="bi bi-arrow-left-circle-fill" style="margin-right: 8px; font-size: 1.2rem;"></i> Volver al Panel
+    </a>
+  </div>
+
+  <div class="text-center mb-5" style="color: white;">
+    <h2 style="font-weight: 800; font-size: 2.5rem;">Empresas Asociadas</h2>
+    <p style="font-size: 1.1rem; opacity: 0.9;">Selecciona la empresa con la que trabajarás hoy.</p>
+  </div>
+
+  <div class="row gy-4">
+    {% for info in empresas_info %}
+    <div class="col-md-4">
+      <div class="glass-card" style="padding: 30px; text-align: center; height: 100%; box-sizing: border-box;">
+        <h3 style="color: #FB4318; font-weight: 700;">{{ info.empresa.razon_social }}</h3>
+        
+        <div class="mt-4">
+            <!-- REGLA 1: Si NO requiere aprobación (Abierta) o si ya fue 'Aprobado' -->
+            {% if info.requiere_aprobacion == False or info.estado_solicitud == 'Aprobado' %}
+                <p style="color: #333; font-weight: bold;">¡Tienes acceso a su catálogo!</p>
+                <a href="{% url 'seleccionar_tendero' info.empresa.id %}" class="btn-login" style="padding: 10px; display: block; text-decoration: none;">Empezar Ruta</a>
+            
+            <!-- REGLA 2: Si es Estricta y ya envió solicitud, pero sigue 'Pendiente' -->
+            {% elif info.estado_solicitud == 'Pendiente' %}
+                <p style="color: #333; font-weight: bold;">Revisando tus credenciales...</p>
+                <button class="btn btn-secondary" disabled style="width: 100%; padding: 10px;">Esperando Aprobación</button>
+                
+            <!-- REGLA 3: Si es Estricta y NO tiene solicitud enviada (o fue Rechazado) -->
+            {% else %}
+                <p style="color: #333; font-weight: bold;">Acceso Restringido</p>
+                <!-- Este botón llama a la vista para crear la solicitud -->
+                <a href="{% url 'enviar_solicitud' info.empresa.id %}" class="btn btn-warning" style="padding: 10px; display: block; text-decoration: none; font-weight: bold; width: 100%;">Solicitar Permiso</a>
+            {% endif %}
+        </div>
+
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

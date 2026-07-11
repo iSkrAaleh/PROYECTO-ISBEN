@@ -50,6 +50,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CSRF_FAILURE_VIEW = 'negocio.views.csrf_failure'
+
 ROOT_URLCONF = 'proyectoIsben.urls'
 
 TEMPLATES = [

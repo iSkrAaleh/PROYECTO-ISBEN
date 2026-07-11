@@ -1,0 +1,63 @@
+{% extends "master.html" %}
+{% block content %}
+<div class="container" style="max-width: 1000px; margin-top: 20px; margin-bottom: 50px;">
+  
+  <div class="mb-4">
+    <a href="{% url 'seleccionar_empresa_tendero' %}" class="btn btn-light" style="border-radius: 20px; font-weight: bold; padding: 8px 20px; color: #FB4318; display: inline-flex; align-items: center; text-decoration: none;">
+      <i class="bi bi-arrow-left-circle-fill" style="margin-right: 8px; font-size: 1.2rem;"></i> Volver a Empresas
+    </a>
+  </div>
+
+  <div class="text-center mb-5" style="color: white;">
+    <h2 style="font-weight: 800; font-size: 2.5rem;">Catálogo de Productos</h2>
+    <p style="font-size: 1.1rem; opacity: 0.9;">Estás comprando directo a: <strong style="color: #FB4318;">{{ empresa.razon_social }}</strong></p>
+  </div>
+
+  <!-- El formulario enviará los datos al Paso 3 -->
+  <form action="{% url 'guardar_pedido_tendero' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="empresa_id" value="{{ empresa.id }}">
+    
+    <div class="row gy-4">
+      {% for producto in productos %}
+      <div class="col-md-4">
+        <div class="glass-card" style="padding: 30px; text-align: center; height: 100%; box-sizing: border-box;">
+          <h4 style="color: #FB4318; font-weight: 700; font-size: 1.3rem;">{{ producto.nombre_producto }}</h4>
+          
+          <!-- REGLAS DE STOCK INTELIGENTES -->
+          {% if producto.stock_actual == 0 %}
+              <div class="alert alert-danger" style="padding: 5px; font-weight: bold;">¡AGOTADO!</div>
+              <p style="color: #333; font-weight: bold; margin-bottom: 5px;">Costo: ${{ producto.precio_mayorista }}</p>
+              <div class="mb-3 text-start">
+                <label style="color: #333; font-size: 0.85rem; font-weight: bold;">Cantidad a pedir:</label>
+                <input type="number" class="form-control" disabled placeholder="Sin stock">
+              </div>
+
+          {% else %}
+              {% if producto.stock_actual < 10 %}
+                  <div class="alert alert-warning" style="padding: 5px; font-weight: bold;">¡Últimas {{ producto.stock_actual }} unidades!</div>
+              {% else %}
+                  <p style="color: #333; font-weight: bold; margin-bottom: 5px;">Stock Disponible: {{ producto.stock_actual }}</p>
+              {% endif %}
+              
+              <p style="color: #333; font-weight: bold; margin-bottom: 15px;">Costo: ${{ producto.precio_mayorista }}</p>
+              <div class="mb-3 text-start">
+                <label style="color: #333; font-size: 0.85rem; font-weight: bold;">Cantidad a pedir (0 si no deseas):</label>
+                <input type="number" name="cantidad_{{ producto.id }}" class="form-control" min="0" max="{{ producto.stock_actual }}">
+              </div>
+          {% endif %}
+          
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="text-center mt-5">
+      <button type="submit" class="btn-login" style="padding: 15px 40px; font-size: 1.2rem; font-weight: bold; border: none; width: 100%; max-width: 400px;">
+        Confirmar Mi Compra
+      </button>
+    </div>
+  </form>
+
+</div>
+{% endblock %}
