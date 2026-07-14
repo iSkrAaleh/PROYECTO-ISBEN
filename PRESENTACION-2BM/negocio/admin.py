@@ -1,9 +1,9 @@
 from django.contrib import admin
 
-# Importamos los modelos que creamos
+# importamos los modelos que creamos
 from .models import Empresa, Vendedor, Tendero, Suscripcion, Producto, Pedido, DetallePedido, SolicitudVendedor
 
-# Registramos los modelos para que aparezcan en el panel de administrador
+# registramos los modelos para que aparezcan en el panel de administrador
 admin.site.register(Empresa)
 admin.site.register(Vendedor)
 admin.site.register(Tendero)

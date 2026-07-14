@@ -87,16 +87,16 @@ class DetallePedido(models.Model):
         return "%d %.2f" % (self.cantidad_producto, self.precio_unitario_aplicado)
 
 class SolicitudVendedor(models.Model):
-    # Conectamos con el Vendedor y con la Empresa
+    # establecemos la relacion entre el intermediario y el proveedor
     vendedor = models.ForeignKey(Vendedor, on_delete=models.CASCADE, related_name="solicitudes")
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE, related_name="solicitudes_recibidas")
     
-    # Guardamos la fecha en la que hizo la solicitud
+    # registramos la fecha de creacion del documento
     fecha_solicitud = models.DateTimeField()
     
-    # El estado por defecto será "Pendiente" hasta que la empresa lo cambie
+    # definimos el estado inicial del flujo de aprobacion
     estado_solicitud = models.CharField(max_length=50, default="Pendiente")
 
     def __str__(self):
-        # Mantenemos tu estilo exacto para retornar cadenas de texto con %s
+        # retornamos un texto representativo de la solicitud
         return "%s a %s - %s" % (self.vendedor.usuario.username, self.empresa.razon_social, self.estado_solicitud)

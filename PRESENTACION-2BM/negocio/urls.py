@@ -7,6 +7,7 @@ urlpatterns = [
     path('hub/', views.hub_view, name='hub'),
     path('logout/', views.logout_view, name='logout'),
     path('mis-productos/', views.listar_productos_empresa, name='listar_productos_empresa'),
+    path('crear-producto/', views.crear_producto_view, name='crear_producto'),
     path('seleccionar-empresa/', views.seleccionar_empresa_view, name='seleccionar_empresa'),
     path('enviar-solicitud/<int:empresa_id>/', views.enviar_solicitud_view, name='enviar_solicitud'),
     path('seleccionar-tendero/<int:empresa_id>/', views.seleccionar_tendero_view, name='seleccionar_tendero'),
