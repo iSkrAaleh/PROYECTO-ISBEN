@@ -11,6 +11,20 @@ class Empresa(models.Model):
     estado_verificacion = models.BooleanField(default=False)
     requiere_aprobacion = models.BooleanField(default=False)
 
+    # Lógica Freemium/Premium
+    PLAN_CHOICES = (
+        ('TRIAL', 'Prueba 14 Días'),
+        ('PREMIUM', 'Premium'),
+    )
+    tipo_plan = models.CharField(max_length=10, choices=PLAN_CHOICES, default='TRIAL')
+    suscripcion_activa = models.BooleanField(default=True)
+    fecha_vencimiento_prueba = models.DateTimeField(null=True, blank=True)
+    
+    # Nuevos campos de Perfil
+    direccion_principal = models.CharField(max_length=255, default="", blank=True)
+    foto_perfil = models.ImageField(upload_to='perfiles/empresas/', null=True, blank=True)
+    bot_voz_activa = models.BooleanField(default=False, verbose_name='Activar respuestas por voz del Tigre Bot')
+
     def __str__(self):
         return "%s %s %s" % (self.ruc, self.razon_social, self.representante_legal)
 
@@ -20,6 +34,11 @@ class Vendedor(models.Model):
     cedula = models.CharField(max_length=20)
     nota_capacitacion = models.FloatField(default=0.0)
     estado_aprobacion = models.BooleanField(default=False)
+    
+    # Nuevos campos de Perfil
+    zona_cobertura = models.CharField(max_length=150, default="", blank=True)
+    foto_perfil = models.ImageField(upload_to='perfiles/vendedores/', null=True, blank=True)
+    bot_voz_activa = models.BooleanField(default=False, verbose_name='Activar respuestas por voz del Tigre Bot')
 
     def __str__(self):
         return "%s %s %s" % (self.cedula, self.usuario.first_name, self.usuario.last_name)
@@ -31,6 +50,11 @@ class Tendero(models.Model):
     direccion_fisica = models.CharField(max_length=255)
     ruc_negocio = models.CharField(max_length=20)
     coordenadas_gps = models.CharField(max_length=100)
+    
+    # Nuevos campos de Perfil
+    referencias = models.CharField(max_length=255, default="", blank=True)
+    foto_perfil = models.ImageField(upload_to='perfiles/tenderos/', null=True, blank=True)
+    bot_voz_activa = models.BooleanField(default=False, verbose_name='Activar respuestas por voz del Tigre Bot')
 
     def __str__(self):
         return "%s %s" % (self.nombre_local, self.ruc_negocio)
@@ -70,6 +94,10 @@ class Pedido(models.Model):
     tendero = models.ForeignKey(Tendero, on_delete=models.CASCADE, related_name="pedidos", null=True, blank=True)
     
     vendedor = models.ForeignKey(Vendedor, on_delete=models.CASCADE, related_name="pedidos_levantados", null=True, blank=True)
+
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE, related_name="pedidos_empresa", null=True, blank=True)
+    comision_generada = models.FloatField(default=0.0)
+    comision_pagada = models.BooleanField(default=False)
 
     def __str__(self):
         return "%s %s" % (self.estado_pedido, self.metodo_generacion)

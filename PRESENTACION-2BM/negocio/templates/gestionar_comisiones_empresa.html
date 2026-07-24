@@ -1,0 +1,68 @@
+{% extends "master.html" %}
+
+{% block title %}Gestión de Comisiones - ISBEN Solutions{% endblock %}
+
+{% block content %}
+<div class="container isben-style-0345b8">
+  
+  <div class="mb-4">
+    <a href="{% url 'hub' %}" class="btn btn-light isben-style-eb0b79">
+      <i class="bi bi-arrow-left-circle-fill isben-style-af9af8"></i> Volver al Panel
+    </a>
+  </div>
+
+  <div class="text-center mb-5 isben-style-f6234f">
+    <h2 class="isben-style-121806">Liquidación de Comisiones</h2>
+    <p class="isben-style-1e0220">Revisa la deuda pendiente con tus vendedores asociados y regístralo como pagado.</p>
+  </div>
+
+  <div class="isben-style-25c12e">
+    <h3 class="isben-style-2ede26">Vendedores con Saldos Pendientes</h3>
+    
+    {% if vendedores_deuda %}
+      <div class="table-responsive">
+        <table class="table table-hover align-middle isben-style-c2a1da">
+          <thead class="isben-style-2f9d52">
+            <tr>
+              <th class="isben-style-235929">Vendedor</th>
+              <th class="isben-style-9db576">Cédula</th>
+              <th class="isben-style-9db576">Cant. Pedidos</th>
+              <th class="isben-style-9db576">Deuda Total</th>
+              <th class="isben-style-6ce57a">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in vendedores_deuda %}
+            <tr class="isben-style-a6da4c">
+              <td class="isben-style-5b2b09">{{ item.vendedor.usuario.first_name }} {{ item.vendedor.usuario.last_name }}</td>
+              <td class="isben-style-5f3a65">{{ item.vendedor.cedula }}</td>
+              <td class="isben-style-087bdd">{{ item.cantidad_pedidos }}</td>
+              <td class="isben-style-01e588">${{ item.total_deuda|floatformat:2 }}</td>
+              <td class="isben-style-f39536">
+                <form action="{% url 'liquidar_comisiones_vendedor' item.vendedor.id %}" method="POST" class="isben-style-820c64">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-success isben-style-614cf4" onclick="return confirm('¿Confirma que ha realizado el pago de ${{ item.total_deuda|floatformat:2 }} a este vendedor?');">
+                    <i class="bi bi-check-circle-fill isben-style-c02c7d"></i> Marcar Pagado
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="text-center py-5">
+        <div class="isben-style-a76b7c">
+          <i class="bi bi-emoji-sunglasses"></i>
+        </div>
+        <h4 class="isben-style-e7c919">¡Todo al día!</h4>
+        <p class="isben-style-035f9a">No tienes ninguna comisión pendiente de pago con tus vendedores.</p>
+      </div>
+    {% endif %}
+  </div>
+
+</div>
+
+
+{% endblock %}

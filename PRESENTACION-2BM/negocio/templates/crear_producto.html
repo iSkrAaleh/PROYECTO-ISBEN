@@ -3,22 +3,22 @@
 {% block title %}Agregar Producto - ISBEN Solutions{% endblock %}
 
 {% block content %}
-<div class="container" style="max-width: 600px; margin-top: 20px; margin-bottom: 50px;">
+<div class="container isben-style-642b19">
     
-    <div class="text-center mb-5" style="color: white;">
-        <h2 style="font-weight: 800; font-size: 2.5rem;">Agregar Nuevo Producto</h2>
-        <p style="font-size: 1.1rem; opacity: 0.9;">Registra un nuevo ítem en tu inventario.</p>
+    <div class="text-center mb-5 isben-style-f6234f">
+        <h2 class="isben-style-9aad7c">Agregar Nuevo Producto</h2>
+        <p class="isben-style-1e0220">Registra un nuevo ítem en tu inventario.</p>
     </div>
 
-    <div class="glass-card" style="padding: 40px; box-sizing: border-box; background-color: rgba(255, 255, 255, 0.9);">
+    <div class="glass-card isben-style-505fdf">
         <form action="" method="post">
             {% csrf_token %}
             
             {{ formulario.as_p }}
             
-            <div style="text-align: center; margin-top: 30px;">
-                <input type="submit" value="Guardar Producto" class="btn-login" style="border: none; cursor: pointer; margin-right: 10px; padding: 10px 20px; font-size: 1rem;">
-                <a href="{% url 'listar_productos_empresa' %}" class="btn-login" style="display:inline-block; padding: 10px 20px; text-decoration: none; font-size: 1rem; background-color: #666;">Cancelar</a>
+            <div class="isben-style-4459b1">
+                <input type="submit" value="Guardar Producto" class="btn-login isben-style-a6f57b">
+                <a href="{% url 'listar_productos_empresa' %}" class="btn-login isben-style-6f44c8">Cancelar</a>
             </div>
         </form>
     </div>

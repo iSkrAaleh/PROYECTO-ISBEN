@@ -3,36 +3,36 @@
 {% block title %}Mis Productos - ISBEN Solutions{% endblock %}
 
 {% block content %}
-<div class="container" style="max-width: 1000px; margin-top: 20px; margin-bottom: 50px;">
+<div class="container isben-style-e38603">
     
-    <div class="text-center mb-5" style="color: white;">
-        <h2 style="font-weight: 800; font-size: 2.5rem;">Mi Inventario</h2>
-        <p style="font-size: 1.1rem; opacity: 0.9;">Aquí puedes revisar tu catálogo de productos.</p>
-        <a href="{% url 'hub' %}" class="btn-login" style="display:inline-block; padding: 10px 20px; text-decoration: none; width: auto; font-size: 1rem;">Volver al Panel</a>
-        <a href="{% url 'crear_producto' %}" class="btn-login" style="display:inline-block; padding: 10px 20px; text-decoration: none; width: auto; font-size: 1rem; margin-left: 10px; background-color: #28a745;">+ Agregar Producto</a>
+    <div class="text-center mb-5 isben-style-f6234f">
+        <h2 class="isben-style-9aad7c">Mi Inventario</h2>
+        <p class="isben-style-1e0220">Aquí puedes revisar tu catálogo de productos.</p>
+        <a href="{% url 'hub' %}" class="btn-login isben-style-e77979">Volver al Panel</a>
+        <a href="{% url 'crear_producto' %}" class="btn-login isben-style-23ddc3">+ Agregar Producto</a>
     </div>
 
-    <div class="glass-card" style="max-width: 100%; padding: 40px; box-sizing: border-box;">
-        <table class="table" style="width: 100%; text-align: left; border-collapse: separate; border-spacing: 0 10px;">
+    <div class="glass-card isben-style-628dce">
+        <table class="table isben-style-ee75ab">
             <thead>
-                <tr style="color: #FB4318; font-weight: 700;">
-                    <th style="padding: 15px;">SKU</th>
-                    <th style="padding: 15px;">Nombre del Producto</th>
-                    <th style="padding: 15px;">Precio (Mayorista)</th>
-                    <th style="padding: 15px;">Stock Disponible</th>
+                <tr class="isben-style-884c7f">
+                    <th class="isben-style-087bdd">SKU</th>
+                    <th class="isben-style-087bdd">Nombre del Producto</th>
+                    <th class="isben-style-087bdd">Precio (Mayorista)</th>
+                    <th class="isben-style-087bdd">Stock Disponible</th>
                 </tr>
             </thead>
             <tbody>
                 {% for p in productos %}
-                <tr style="background-color: rgba(255, 255, 255, 0.5); transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='rgba(255, 255, 255, 0.8)'" onmouseout="this.style.backgroundColor='rgba(255, 255, 255, 0.5)'">
-                    <td style="padding: 15px; border-radius: 10px 0 0 10px;">{{ p.codigo_sku }}</td>
-                    <td style="padding: 15px; font-weight: 600; color: #333;">{{ p.nombre_producto }}</td>
-                    <td style="padding: 15px; color: #28a745; font-weight: 700;">${{ p.precio_mayorista }}</td>
-                    <td style="padding: 15px; border-radius: 0 10px 10px 0;">{{ p.stock_actual }} un.</td>
+                <tr onmouseover="this.style.backgroundColor='rgba(255, 255, 255, 0.8)'" onmouseout="this.style.backgroundColor='rgba(255, 255, 255, 0.5)'" class="isben-style-c4b046">
+                    <td class="isben-style-4fe5f8">{{ p.codigo_sku }}</td>
+                    <td class="isben-style-5b2b09">{{ p.nombre_producto }}</td>
+                    <td class="isben-style-eef0be">${{ p.precio_mayorista }}</td>
+                    <td class="isben-style-eba243">{{ p.stock_actual }} un.</td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="4" style="text-align: center; padding: 20px; color: #666;">No has registrado productos todavía.</td>
+                    <td colspan="4" class="isben-style-41e54b">No has registrado productos todavía.</td>
                 </tr>
                 {% endfor %}
             </tbody>

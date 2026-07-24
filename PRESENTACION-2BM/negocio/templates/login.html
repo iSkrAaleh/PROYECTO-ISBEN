@@ -13,22 +13,22 @@
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
         <div class="mb-3">
-            <label
-                style="color: #333; font-weight: 700; margin-bottom: 5px; text-align: left; display: block; padding-left: 10px;">Correo
+            <label class="isben-style-6eb6d7">Correo
                 electrónico o Cédula:</label>
             {{ form.username }}
         </div>
         <div class="mb-3">
-            <label
-                style="color: #333; font-weight: 700; margin-bottom: 5px; text-align: left; display: block; padding-left: 10px;">Contraseña:</label>
+            <label class="isben-style-6eb6d7">Contraseña:</label>
             {{ form.password }}
         </div>
         <button type="submit" class="btn-login">Ingresar</button>
     </form>
 
     <div class="text-center mt-4">
-        <a href="#" style="color: #FB4318; font-size: 0.9rem; font-weight: 600; text-decoration: none;">¿Olvidaste tu
-            contraseña?</a>
+        <a href="#" class="isben-style-0614e5">¿Olvidaste tu contraseña?</a>
+        <br><br>
+        <p class="isben-style-a40dc8">¿No tienes una cuenta?</p>
+        <a href="{% url 'registro' %}" class="btn-login isben-style-dea7db">Regístrate aquí</a>
     </div>
 
 </div>

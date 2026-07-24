@@ -1,0 +1,29 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}Mapa del Cliente - ISBEN Solutions{% endblock %}
+
+{% block content %}
+<div class="container isben-style-141f54">
+  
+  <div class="text-center mb-4 isben-style-f6234f">
+    <h2 class="isben-style-9aad7c">Ruta: {{ tendero.nombre_local }}</h2>
+    <p class="isben-style-1e0220"><strong>Dirección:</strong> {{ tendero.direccion_fisica }}</p>
+  </div>
+
+  <div class="glass-card text-center isben-style-774632">
+    <h4 class="isben-style-2b8a3e">Ubicación en el Mapa</h4>
+    
+    <!-- Imagen del mapa (placeholder para el proyecto) -->
+    <div class="isben-style-d22c29">
+      <img src="{% static 'imagenes/mapa.png' %}" alt="Mapa del Cliente" class="isben-style-adc0c7">
+    </div>
+    
+  </div>
+
+  <div class="text-center mt-5">
+    <a href="{% url 'mis_rutas' %}" class="btn-login isben-style-c71217">Volver a Mis Rutas</a>
+  </div>
+
+</div>
+{% endblock %}

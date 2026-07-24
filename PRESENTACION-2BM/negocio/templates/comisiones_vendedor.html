@@ -1,0 +1,90 @@
+{% extends "master.html" %}
+
+{% block title %}Mis Comisiones - ISBEN Solutions{% endblock %}
+
+{% block content %}
+<div class="container isben-style-0345b8">
+  
+  <div class="mb-4">
+    <a href="{% url 'hub' %}" class="btn btn-light isben-style-eb0b79">
+      <i class="bi bi-arrow-left-circle-fill isben-style-af9af8"></i> Volver al Panel
+    </a>
+  </div>
+
+  <div class="text-center mb-5 isben-style-f6234f">
+    <h2 class="isben-style-121806">Dashboard de Comisiones</h2>
+    <p class="isben-style-1e0220">Resumen de tus ganancias generadas (5% de comisión por pedido).</p>
+  </div>
+
+  <!-- Tarjetas KPI -->
+  <div class="row gy-4 mb-5">
+    <div class="col-md-4">
+      <div class="isben-style-3d42bf">
+        <h5 class="isben-style-85b4f4">Histórico Total</h5>
+        <h2 class="isben-style-978e7b">${{ total_historico|floatformat:2 }}</h2>
+      </div>
+    </div>
+    
+    <div class="col-md-4">
+      <div class="isben-style-a46e5c">
+        <h5 class="isben-style-85b4f4">Pendiente de Pago</h5>
+        <h2 class="isben-style-204b85">${{ total_pendiente|floatformat:2 }}</h2>
+      </div>
+    </div>
+    
+    <div class="col-md-4">
+      <div class="isben-style-9905c5">
+        <h5 class="isben-style-85b4f4">Pagado / Liquidado</h5>
+        <h2 class="isben-style-f082c7">${{ total_pagado|floatformat:2 }}</h2>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla de Historial -->
+  <div class="isben-style-25c12e">
+    <h3 class="isben-style-2ede26">Historial de Pedidos Realizados</h3>
+    
+    {% if historial_pedidos %}
+      <div class="table-responsive">
+        <table class="table table-hover isben-style-c2a1da">
+          <thead class="isben-style-2f9d52">
+            <tr>
+              <th class="isben-style-235929">Fecha</th>
+              <th class="isben-style-9db576">Cliente (Tendero)</th>
+              <th class="isben-style-9db576">Distribuidora</th>
+              <th class="isben-style-9db576">Monto Venta</th>
+              <th class="isben-style-9db576">Comisión (5%)</th>
+              <th class="isben-style-98c1aa">Estado de Pago</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for pedido in historial_pedidos %}
+            <tr class="isben-style-a6da4c">
+              <td class="isben-style-7de972">{{ pedido.fecha_hora_emision|date:"d/m/Y H:i" }}</td>
+              <td class="isben-style-8ed44f">{{ pedido.tendero.nombre_local }}</td>
+              <td class="isben-style-7de972">{{ pedido.empresa.razon_social|default:"N/A" }}</td>
+              <td class="isben-style-7de972">${{ pedido.total_pedido|floatformat:2 }}</td>
+              <td class="isben-style-09e96f">${{ pedido.comision_generada|floatformat:2 }}</td>
+              <td class="isben-style-7de972">
+                {% if pedido.comision_pagada %}
+                  <span class="badge isben-style-b6b4e0">Pagado</span>
+                {% else %}
+                  <span class="badge isben-style-b718ce">Pendiente</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="text-center py-5">
+        <p class="isben-style-035f9a">Aún no has generado comisiones. ¡Empieza a realizar pedidos para tus tenderos!</p>
+      </div>
+    {% endif %}
+  </div>
+
+</div>
+
+
+{% endblock %}

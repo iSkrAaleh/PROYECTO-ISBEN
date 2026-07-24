@@ -1,9 +1,25 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from negocio.models import Empresa, Vendedor, Tendero
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
+from django.utils import timezone
+from datetime import timedelta
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
+import json
+import openai
+from django.db.models import Sum
+from negocio.models import Empresa, Vendedor, Tendero, Producto, Pedido
+from negocio.forms import ProductoForm, RegistroUsuarioForm, UsuarioBasicoForm, EmpresaPerfilForm, TenderoPerfilForm, VendedorPerfilForm
 
 def index(request):
     return redirect('login')
@@ -217,6 +233,12 @@ def guardar_pedido_view(request):
             # consolidamos los montos finales del documento
             nuevo_pedido.subtotal_pedido = total_pedido
             nuevo_pedido.total_pedido = total_pedido
+            # Asignamos la empresa del primer producto agregado
+            primer_detalle = nuevo_pedido.detalles.first()
+            if primer_detalle:
+                nuevo_pedido.empresa = primer_detalle.producto.empresa
+            # Calculamos comisión 5% para el vendedor
+            nuevo_pedido.comision_generada = total_pedido * 0.05
             nuevo_pedido.save()
             messages.info(request, f'¡Pedido múltiple registrado! ({productos_agregados} tipos de productos)')
         else:
@@ -520,6 +542,17 @@ def crear_producto_view(request):
     if len(mis_empresas) > 0:
         mi_empresa = mis_empresas[0]
         
+        # VALIDACIÓN DE LÍMITES - LÓGICA FREEMIUM / TRIAL
+        if mi_empresa.tipo_plan == 'TRIAL':
+            if mi_empresa.fecha_vencimiento_prueba and timezone.now() > mi_empresa.fecha_vencimiento_prueba:
+                messages.error(request, 'Tu prueba de 14 días ha finalizado. Por favor, mejora al plan PREMIUM para seguir creando productos.')
+                return redirect('listar_productos_empresa')
+                
+            cantidad_productos = Producto.objects.filter(empresa=mi_empresa).count()
+            if cantidad_productos >= 20:
+                messages.error(request, 'Límite alcanzado: Tu plan TRIAL solo permite crear 20 productos. Por favor, mejora al plan PREMIUM.')
+                return redirect('listar_productos_empresa')
+        
         if request.method == 'POST':
             formulario = ProductoForm(request.POST)
             if formulario.is_valid():
@@ -536,3 +569,276 @@ def crear_producto_view(request):
         
     else:
         return redirect('hub')
+
+@login_required(login_url='/login/')
+def mis_rutas_view(request):
+    mis_vendedores = Vendedor.objects.filter(usuario=request.user).all()
+    if len(mis_vendedores) > 0:
+        mi_vendedor = mis_vendedores[0]
+        # Mostrar todos los tenderos como "clientes" de la ruta
+        tenderos = Tendero.objects.all()
+        return render(request, 'mis_rutas.html', {'tenderos': tenderos})
+    else:
+        return redirect('hub')
+
+@login_required(login_url='/login/')
+def mapa_cliente_view(request, tendero_id):
+    try:
+        tendero = Tendero.objects.get(id=tendero_id)
+        return render(request, 'mapa_cliente.html', {'tendero': tendero})
+    except Tendero.DoesNotExist:
+        return redirect('hub')
+
+def registro_view(request):
+    if request.user.is_authenticated:
+        return redirect('hub')
+        
+    if request.method == 'POST':
+        formulario = RegistroUsuarioForm(request.POST)
+        if formulario.is_valid():
+            datos = formulario.cleaned_data
+            
+            try:
+                user = User.objects.create_user(
+                    username=datos['username'],
+                    password=datos['password'],
+                    first_name=datos['first_name'],
+                    last_name=datos['last_name'],
+                    email=datos['email']
+                )
+            except Exception as e:
+                messages.error(request, 'Error al crear usuario. Verifica que el username no esté en uso.')
+                return render(request, 'registro.html', {'formulario': formulario})
+                
+            rol = datos['rol']
+            
+            if rol == 'EMPRESA':
+                tipo_plan = datos['plan_empresa']
+                fecha_vencimiento = None
+                suscripcion_activa = True
+                
+                if tipo_plan == 'TRIAL':
+                    fecha_vencimiento = timezone.now() + timedelta(days=14)
+                
+                Empresa.objects.create(
+                    usuario=user,
+                    ruc=datos['ruc'],
+                    razon_social=datos['razon_social'],
+                    representante_legal=datos['representante_legal'],
+                    limite_compra_minimo=datos['limite_compra_minimo'],
+                    tipo_plan=tipo_plan,
+                    fecha_vencimiento_prueba=fecha_vencimiento,
+                    suscripcion_activa=suscripcion_activa,
+                    estado_verificacion=True
+                )
+                
+            elif rol == 'VENDEDOR':
+                Vendedor.objects.create(
+                    usuario=user,
+                    cedula=datos['cedula'],
+                    estado_aprobacion=True
+                )
+                
+            elif rol == 'TENDERO':
+                Tendero.objects.create(
+                    usuario=user,
+                    nombre_local=datos['nombre_local'],
+                    ruc_negocio=datos['ruc_negocio'],
+                    direccion_fisica=datos['direccion_fisica'],
+                    coordenadas_gps=datos['coordenadas_gps']
+                )
+                
+            login(request, user)
+            messages.success(request, '¡Registro exitoso! Bienvenido a ISBEN.')
+            return redirect('hub')
+            
+    else:
+        formulario = RegistroUsuarioForm()
+        
+    return render(request, 'registro.html', {'formulario': formulario})
+
+@login_required(login_url='/login/')
+def perfil_view(request):
+    user = request.user
+    
+    # Determinar el rol
+    es_empresa = hasattr(user, 'empresa')
+    es_vendedor = hasattr(user, 'vendedor')
+    es_tendero = hasattr(user, 'tendero')
+    
+    perfil_instance = None
+    PerfilFormClass = None
+    
+    if es_empresa:
+        perfil_instance = user.empresa
+        PerfilFormClass = EmpresaPerfilForm
+    elif es_vendedor:
+        perfil_instance = user.vendedor
+        PerfilFormClass = VendedorPerfilForm
+    elif es_tendero:
+        perfil_instance = user.tendero
+        PerfilFormClass = TenderoPerfilForm
+        
+    if request.method == 'POST':
+        form_basico = UsuarioBasicoForm(request.POST, instance=user)
+        form_perfil = None
+        if PerfilFormClass and perfil_instance:
+            form_perfil = PerfilFormClass(request.POST, request.FILES, instance=perfil_instance)
+            
+        if form_basico.is_valid() and (not form_perfil or form_perfil.is_valid()):
+            form_basico.save()
+            if form_perfil:
+                form_perfil.save()
+            messages.success(request, 'Tu perfil ha sido actualizado exitosamente.')
+            return redirect('perfil')
+        else:
+            messages.error(request, 'Error al actualizar el perfil. Por favor revisa los campos.')
+    else:
+        form_basico = UsuarioBasicoForm(instance=user)
+        form_perfil = PerfilFormClass(instance=perfil_instance) if PerfilFormClass else None
+
+    # Recopilar datos analíticos / solo lectura según rol
+    datos_extra = {}
+    if es_empresa:
+        datos_extra['vendedores_aprobados'] = perfil_instance.solicitudes_recibidas.filter(estado_solicitud='Aprobada').count()
+        # Verificar vencimiento
+        if perfil_instance.tipo_plan == 'TRIAL' and perfil_instance.fecha_vencimiento_prueba:
+            restante = (perfil_instance.fecha_vencimiento_prueba - timezone.now()).days
+            datos_extra['dias_trial'] = max(0, restante)
+            
+    elif es_vendedor:
+        datos_extra['empresas_vinculadas'] = perfil_instance.solicitudes.filter(estado_solicitud='Aprobada').count()
+        
+    contexto = {
+        'form_basico': form_basico,
+        'form_perfil': form_perfil,
+        'es_empresa': es_empresa,
+        'es_vendedor': es_vendedor,
+        'es_tendero': es_tendero,
+        'datos_extra': datos_extra,
+        'perfil_instance': perfil_instance
+    }
+    
+    return render(request, 'perfil.html', contexto)
+
+@csrf_exempt
+@login_required(login_url='/login/')
+def tigre_bot_view(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            pregunta = data.get('pregunta', '')
+            
+            # Verificar si el usuario tiene activada la voz
+            bot_voz_activa = False
+            if hasattr(request.user, 'empresa'):
+                bot_voz_activa = request.user.empresa.bot_voz_activa
+            elif hasattr(request.user, 'vendedor'):
+                bot_voz_activa = request.user.vendedor.bot_voz_activa
+            elif hasattr(request.user, 'tendero'):
+                bot_voz_activa = request.user.tendero.bot_voz_activa
+
+            # Inicializar cliente OpenAI
+            client = openai.OpenAI(api_key=settings.OPENAI_API_KEY)
+            
+            # System Prompt (Contexto RAG de ISBEN)
+            system_prompt = """
+            Eres 'Tigre Bot', el asistente virtual multimodal y amigable del sistema ISBEN.
+            Tu objetivo es ayudar a combatir el analfabetismo digital. Responde de forma EXTREMADAMENTE SENCILLA, PACIENTE y CORTA (máximo 3 oraciones). 
+            Hablas con tenderos, empresas y vendedores independientes.
+            Contexto del sistema ISBEN para Tenderos:
+            - Si preguntan cómo hacer un pedido o comprar: Diles literalmente: "Haz clic en 'Ver Catálogo' en tu Panel, luego elige una distribuidora y dale a 'Ver Productos'. Ingresa la 'Cantidad a pedir' y finalmente presiona 'Confirmar Mi Compra'."
+            - Si preguntan por sus compras anteriores: Diles literalmente: "Haz clic en 'Ver Historial y Rastreo' en tu panel principal."
+            - Si preguntan cómo cambiar datos del local: Diles: "Haz clic en 'Gestionar Local' desde tu panel principal."
+            - Si preguntan por pagos: Los tenderos pagan al recibir el pedido (contra-entrega) o a 14 días.
+            Usa emojis amigables. No des detalles técnicos. Si no sabes algo, diles que llamen al soporte al 0999999999.
+            """
+
+            response = client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": pregunta}
+                ],
+                max_tokens=150,
+                temperature=0.7
+            )
+            
+            respuesta_texto = response.choices[0].message.content
+            
+            return JsonResponse({
+                'respuesta': respuesta_texto,
+                'hablar': bot_voz_activa
+            })
+            
+        except Exception as e:
+            return JsonResponse({'respuesta': '¡Uy! Me he tropezado un poco, intenta preguntarme de nuevo.', 'hablar': False})
+            
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+@login_required(login_url='/login/')
+def ver_comisiones_vendedor(request):
+    mis_vendedores = Vendedor.objects.filter(usuario=request.user).all()
+    if len(mis_vendedores) == 0:
+        return redirect('hub')
+    mi_vendedor = mis_vendedores[0]
+    
+    # Historial detallado
+    historial_pedidos = Pedido.objects.filter(vendedor=mi_vendedor, estado_pedido='Completado').order_by('-fecha_hora_emision')
+    
+    # Agregaciones ORM
+    total_historico = historial_pedidos.aggregate(Sum('comision_generada'))['comision_generada__sum'] or 0.0
+    total_pendiente = historial_pedidos.filter(comision_pagada=False).aggregate(Sum('comision_generada'))['comision_generada__sum'] or 0.0
+    total_pagado = historial_pedidos.filter(comision_pagada=True).aggregate(Sum('comision_generada'))['comision_generada__sum'] or 0.0
+
+    contexto = {
+        'total_historico': total_historico,
+        'total_pendiente': total_pendiente,
+        'total_pagado': total_pagado,
+        'historial_pedidos': historial_pedidos
+    }
+    return render(request, 'comisiones_vendedor.html', contexto)
+
+@login_required(login_url='/login/')
+def gestionar_comisiones_empresa(request):
+    mis_empresas = Empresa.objects.filter(usuario=request.user).all()
+    if len(mis_empresas) == 0:
+        return redirect('hub')
+    mi_empresa = mis_empresas[0]
+    
+    # Pedidos completados que pertenecen a esta empresa, fueron generados por un vendedor y no han sido pagados
+    pedidos_pendientes = Pedido.objects.filter(empresa=mi_empresa, vendedor__isnull=False, estado_pedido='Completado', comision_pagada=False)
+    
+    # Agrupamos por vendedor en un diccionario para la vista
+    vendedores_deuda = {}
+    for pedido in pedidos_pendientes:
+        vid = pedido.vendedor.id
+        if vid not in vendedores_deuda:
+            vendedores_deuda[vid] = {
+                'vendedor': pedido.vendedor,
+                'total_deuda': 0.0,
+                'cantidad_pedidos': 0
+            }
+        vendedores_deuda[vid]['total_deuda'] += pedido.comision_generada
+        vendedores_deuda[vid]['cantidad_pedidos'] += 1
+        
+    contexto = {
+        'vendedores_deuda': vendedores_deuda.values()
+    }
+    return render(request, 'gestionar_comisiones_empresa.html', contexto)
+
+@login_required(login_url='/login/')
+def liquidar_comisiones_vendedor(request, vendedor_id):
+    if request.method == 'POST':
+        mis_empresas = Empresa.objects.filter(usuario=request.user).all()
+        if len(mis_empresas) == 0:
+            return redirect('hub')
+        mi_empresa = mis_empresas[0]
+        
+        # Marcar como pagados los pedidos pendientes del vendedor con esta empresa
+        pedidos_pendientes = Pedido.objects.filter(empresa=mi_empresa, vendedor_id=vendedor_id, estado_pedido='Completado', comision_pagada=False)
+        pedidos_pendientes.update(comision_pagada=True)
+        
+        messages.info(request, 'Las comisiones del vendedor han sido liquidadas exitosamente.')
+        
+    return redirect('gestionar_comisiones_empresa')

@@ -1,0 +1,36 @@
+{% extends "master.html" %}
+
+{% block title %}Mis Rutas - ISBEN Solutions{% endblock %}
+
+{% block content %}
+<div class="container isben-style-141f54">
+  
+  <div class="text-center mb-5 isben-style-f6234f">
+    <h2 class="isben-style-9aad7c">Mis Rutas y Clientes</h2>
+    <p class="isben-style-1e0220">Selecciona un cliente para ver su ubicación en el mapa.</p>
+  </div>
+
+  <div class="row gy-4">
+    {% for tendero in tenderos %}
+    <div class="col-md-6">
+      <div class="glass-card isben-style-7cea88">
+        <h4 class="isben-style-884c7f">{{ tendero.nombre_local }}</h4>
+        <p class="isben-style-7d2d11"><strong>Dueño:</strong> {{ tendero.usuario.first_name }} {{ tendero.usuario.last_name }}</p>
+        <p class="isben-style-b0473a"><strong>Dirección:</strong> {{ tendero.direccion_fisica }}</p>
+        
+        <a href="{% url 'mapa_cliente' tendero.id %}" class="btn-login isben-style-b8c093">Ver Mapa</a>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center isben-style-f6234f">
+      <p>No hay clientes disponibles en tu ruta actualmente.</p>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="text-center mt-5">
+    <a href="{% url 'hub' %}" class="btn btn-secondary isben-style-4bbf3f">Volver al Panel</a>
+  </div>
+
+</div>
+{% endblock %}

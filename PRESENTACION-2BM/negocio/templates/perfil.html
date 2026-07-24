@@ -1,0 +1,186 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block title %}Mi Perfil - ISBEN{% endblock %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <div class="row">
+        <!-- Columna Izquierda: Datos Personales -->
+        <div class="col-md-5 mb-4">
+            <div class="card shadow-sm border-0 isben-style-afba66">
+                <div class="card-header text-white text-center py-3 isben-style-62601d">
+                    <h4 class="mb-0">Datos Personales</h4>
+                </div>
+                <div class="card-body p-4 text-center">
+                    
+                    {% if perfil_instance.foto_perfil %}
+                        <img src="{{ perfil_instance.foto_perfil.url }}" alt="Foto de perfil" class="rounded-circle mb-3 isben-style-c7a6a9">
+                    {% else %}
+                        <div class="rounded-circle bg-secondary d-inline-flex align-items-center justify-content-center mb-3 isben-style-1f5a0b">
+                            <i class="bi bi-person-fill"></i>
+                        </div>
+                    {% endif %}
+                    
+                    <h5 class="mb-1 fw-bold">{{ request.user.first_name }} {{ request.user.last_name }}</h5>
+                    <p class="text-muted mb-4">{{ request.user.email }}</p>
+
+                    {% if form_basico.errors or form_perfil.errors %}
+                        <div class="alert alert-danger text-start">
+                            Por favor corrige los errores del formulario.
+                        </div>
+                    {% endif %}
+
+                    <form method="POST" enctype="multipart/form-data" class="text-start">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label class="fw-bold isben-style-33dd45">Nombre</label>
+                            {{ form_basico.first_name }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="fw-bold isben-style-33dd45">Apellido</label>
+                            {{ form_basico.last_name }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="fw-bold isben-style-33dd45">Correo Electrónico</label>
+                            {{ form_basico.email }}
+                        </div>
+                        
+                        <hr class="my-4">
+                        <h6 class="fw-bold mb-3 isben-style-c1e2dc">Seguridad</h6>
+                        <a href="{% url 'cambiar_password' %}" class="btn btn-outline-dark w-100 mb-3 isben-style-838095"><i class="bi bi-key-fill me-2"></i>Cambiar Contraseña</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna Derecha: Datos de Negocio -->
+        <div class="col-md-7">
+            <div class="card shadow-sm border-0 h-100 isben-style-afba66">
+                <div class="card-header text-white py-3 isben-style-53f429">
+                    <h4 class="mb-0 text-center">Configuraciones de Negocio</h4>
+                </div>
+                <div class="card-body p-4">
+                    
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label class="fw-bold isben-style-33dd45">Foto de Perfil / Logo</label>
+                                {{ form_perfil.foto_perfil }}
+                            </div>
+                        </div>
+
+                        {% if es_empresa %}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="fw-bold isben-style-33dd45">Teléfono / WhatsApp</label>
+                                    {{ form_perfil.telefono }}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="fw-bold isben-style-33dd45">Nombre Comercial</label>
+                                    {{ form_perfil.razon_social }}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="fw-bold isben-style-33dd45">Dirección Principal de Bodega</label>
+                                {{ form_perfil.direccion_principal }}
+                            </div>
+
+                            <hr>
+                            <h5 class="fw-bold mt-4 mb-3">Análisis y Suscripción</h5>
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <div class="p-3 bg-light rounded isben-style-2ecb6b">
+                                        <h6 class="text-muted mb-1">Plan Actual</h6>
+                                        <h5 class="mb-0 fw-bold">{{ perfil_instance.get_tipo_plan_display }}</h5>
+                                        {% if datos_extra.dias_trial is not None %}
+                                            <small class="text-danger">Quedan {{ datos_extra.dias_trial }} días</small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="p-3 bg-light rounded isben-style-866f03">
+                                        <h6 class="text-muted mb-1">Vendedores Aprobados</h6>
+                                        <h4 class="mb-0 fw-bold">{{ datos_extra.vendedores_aprobados }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                        {% elif es_tendero %}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="fw-bold isben-style-33dd45">Teléfono / WhatsApp</label>
+                                    {{ form_perfil.telefono }}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="fw-bold isben-style-33dd45">Nombre de Tienda</label>
+                                    {{ form_perfil.nombre_local }}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="fw-bold isben-style-33dd45">Dirección Exacta de Entrega</label>
+                                {{ form_perfil.direccion_fisica }}
+                            </div>
+                            <div class="mb-3">
+                                <label class="fw-bold isben-style-33dd45">Referencias de Ubicación</label>
+                                {{ form_perfil.referencias }}
+                            </div>
+
+                        {% elif es_vendedor %}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="fw-bold isben-style-33dd45">Teléfono / WhatsApp</label>
+                                    {{ form_perfil.telefono }}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="fw-bold isben-style-33dd45">Zona de Cobertura Habitual</label>
+                                    {{ form_perfil.zona_cobertura }}
+                                </div>
+                            </div>
+
+                            <hr>
+                            <h5 class="fw-bold mt-4 mb-3">Tu Actividad</h5>
+                            <div class="p-3 bg-light rounded text-center isben-style-69d366">
+                                <h6 class="text-muted mb-1">Empresas Vinculadas Activas</h6>
+                                <h3 class="mb-0 fw-bold">{{ datos_extra.empresas_vinculadas }}</h3>
+                            </div>
+                        {% endif %}
+
+                        <hr>
+                        <h5 class="fw-bold mt-4 mb-3"><i class="bi bi-robot isben-style-c1e2dc"></i> Asistente Tigre Bot</h5>
+                        <div class="p-3 bg-light rounded d-flex justify-content-between align-items-center isben-style-5de14c">
+                            <div>
+                                <h6 class="mb-1 fw-bold">Respuestas por Voz</h6>
+                                <p class="text-muted mb-0 isben-style-e7992d">Si se activa, el Tigre Bot leerá sus respuestas en voz alta para mayor accesibilidad.</p>
+                            </div>
+                            <div class="form-check form-switch isben-style-fa415b">
+                                {{ form_perfil.bot_voz_activa }}
+                            </div>
+                        </div>
+
+                        <div class="text-end mt-4">
+                            <button type="submit" class="btn btn-primary px-5 py-2 isben-style-dc89aa">
+                                Guardar Todos los Cambios
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Añadir clases bootstrap a los inputs generados por django
+    document.addEventListener("DOMContentLoaded", function() {
+        const inputs = document.querySelectorAll("input[type='text'], input[type='email'], input[type='file']");
+        inputs.forEach(input => {
+            input.classList.add("form-control");
+        });
+        
+        const checks = document.querySelectorAll("input[type='checkbox']");
+        checks.forEach(check => {
+            check.classList.add("form-check-input");
+        });
+    });
+</script>
+{% endblock %}

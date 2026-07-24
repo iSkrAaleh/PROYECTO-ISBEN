@@ -1,9 +1,14 @@
 from django.urls import path
+from django.contrib.auth import views as auth_views
 from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
     path('login/', views.login_view, name='login'),
+    path('registro/', views.registro_view, name='registro'),
+    path('perfil/', views.perfil_view, name='perfil'),
+    path('cambiar-password/', auth_views.PasswordChangeView.as_view(template_name='cambiar_password.html', success_url='/perfil/'), name='cambiar_password'),
+    path('api/tigre-bot/', views.tigre_bot_view, name='tigre_bot'),
     path('hub/', views.hub_view, name='hub'),
     path('logout/', views.logout_view, name='logout'),
     path('mis-productos/', views.listar_productos_empresa, name='listar_productos_empresa'),
@@ -21,4 +26,9 @@ urlpatterns = [
     path('mis-pedidos-tendero/', views.mis_pedidos_tendero_view, name='mis_pedidos_tendero'),
     path('gestionar-pedidos/', views.gestionar_pedidos_empresa_view, name='gestionar_pedidos_empresa'),
     path('actualizar-estado-pedido/<int:pedido_id>/', views.actualizar_estado_pedido_view, name='actualizar_estado_pedido'),
+    path('mis-rutas/', views.mis_rutas_view, name='mis_rutas'),
+    path('mapa-cliente/<int:tendero_id>/', views.mapa_cliente_view, name='mapa_cliente'),
+    path('mis-comisiones/', views.ver_comisiones_vendedor, name='ver_comisiones_vendedor'),
+    path('gestionar-comisiones/', views.gestionar_comisiones_empresa, name='gestionar_comisiones_empresa'),
+    path('liquidar-comisiones/<int:vendedor_id>/', views.liquidar_comisiones_vendedor, name='liquidar_comisiones_vendedor'),
 ]

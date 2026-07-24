@@ -1,8 +1,10 @@
 body {
-    font-family: 'Futura', 'Verdana', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f9;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 header {
     background-color: #FB4318;
@@ -129,7 +131,7 @@ th {
     justify-content: center;
     margin-top: 30px;
 }
-.card {
+.hub-cards .card {
     background: white;
     padding: 20px;
     border-radius: 10px;
@@ -137,7 +139,169 @@ th {
     width: 300px;
     text-align: center;
 }
-.card h3 {
+.hub-cards .card h3 {
     color: #FB4318;
     margin-top: 0;
 }
+
+
+/* ==========================================
+   CSS REFACTORIZADO DE PLANTILLAS EN LÍNEA
+   ========================================== */
+
+.table-hover tbody tr:hover {
+    background-color: #fcfcfc !important;
+    transform: translateY(-2px);
+  }
+
+.table-hover tbody tr:hover {
+    background-color: #fcfcfc !important;
+    transform: translateY(-2px);
+  }
+
+.isben-style-afba66 { border-radius: 20px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+.isben-style-62601d { border-radius: 20px 20px 0 0; background-color: #333; }
+.isben-style-33dd45 { font-size: 0.9rem; }
+.isben-style-e7992d { font-size: 0.85rem; }
+.isben-style-fb2a71 { font-size: 0.8rem; }
+.isben-style-dc9ce7 { border-radius: 15px; }
+.isben-style-3ea845 { background-color: #FB4318; border: none; border-radius: 15px; font-weight: 600; }
+.isben-style-e38603 { max-width: 1000px; margin-top: 20px; margin-bottom: 50px; }
+.isben-style-eb0b79 { border-radius: 20px; font-weight: bold; padding: 8px 20px; color: #FB4318; display: inline-flex; align-items: center; text-decoration: none; }
+.isben-style-af9af8 { margin-right: 8px; font-size: 1.2rem; }
+.isben-style-f6234f { color: white; }
+.isben-style-9aad7c { font-weight: 800; font-size: 2.5rem; }
+.isben-style-1e0220 { font-size: 1.1rem; opacity: 0.9; }
+.isben-style-c1e2dc { color: #FB4318; }
+.isben-style-dc853f { padding: 30px; text-align: center; height: 100%; box-sizing: border-box; }
+.isben-style-31c239 { color: #FB4318; font-weight: 700; font-size: 1.3rem; }
+.isben-style-f74c4a { padding: 5px; font-weight: bold; }
+.isben-style-816c84 { color: #333; font-weight: bold; margin-bottom: 5px; }
+.isben-style-589c4f { color: #333; font-size: 0.85rem; font-weight: bold; }
+.isben-style-787287 { color: #333; font-weight: bold; margin-bottom: 15px; }
+.isben-style-a9f3f6 { padding: 15px 40px; font-size: 1.2rem; font-weight: bold; border: none; width: 100%; max-width: 400px; }
+.isben-style-0345b8 { max-width: 1000px; margin-top: 30px; margin-bottom: 50px; }
+.isben-style-121806 { font-weight: 800; font-size: 2.5rem; letter-spacing: -1px; }
+.isben-style-3d42bf { background-color: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center; border-bottom: 4px solid #FB4318; }
+.isben-style-85b4f4 { color: #666; font-weight: 600; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; }
+.isben-style-978e7b { color: #333; font-weight: 800; margin-top: 10px; font-size: 2.2rem; }
+.isben-style-a46e5c { background-color: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center; border-bottom: 4px solid #f39c12; }
+.isben-style-204b85 { color: #f39c12; font-weight: 800; margin-top: 10px; font-size: 2.2rem; }
+.isben-style-9905c5 { background-color: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center; border-bottom: 4px solid #2ecc71; }
+.isben-style-f082c7 { color: #2ecc71; font-weight: 800; margin-top: 10px; font-size: 2.2rem; }
+.isben-style-25c12e { background-color: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+.isben-style-2ede26 { color: #333; font-weight: 800; margin-bottom: 25px; }
+.isben-style-c2a1da { border-collapse: separate; border-spacing: 0 10px; }
+.isben-style-2f9d52 { background-color: #f8f9fa; }
+.isben-style-235929 { padding: 15px; border-top-left-radius: 10px; border-bottom-left-radius: 10px; color: #555; }
+.isben-style-9db576 { padding: 15px; color: #555; }
+.isben-style-98c1aa { padding: 15px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; color: #555; }
+.isben-style-a6da4c { box-shadow: 0 2px 5px rgba(0,0,0,0.02); transition: all 0.3s ease; }
+.isben-style-7de972 { padding: 15px; vertical-align: middle; }
+.isben-style-8ed44f { padding: 15px; vertical-align: middle; font-weight: 600; color: #333; }
+.isben-style-09e96f { padding: 15px; vertical-align: middle; font-weight: bold; color: #FB4318; }
+.isben-style-b6b4e0 { background-color: #e8f8f5; color: #2ecc71; padding: 8px 12px; border-radius: 20px; font-weight: 600; }
+.isben-style-b718ce { background-color: #fdf2e9; color: #f39c12; padding: 8px 12px; border-radius: 20px; font-weight: 600; }
+.isben-style-035f9a { color: #777; font-size: 1.1rem; }
+.isben-style-ad949e { margin-bottom: 15px; font-size: 0.95rem; color: #333; font-weight: bold; }
+.isben-style-642b19 { max-width: 600px; margin-top: 20px; margin-bottom: 50px; }
+.isben-style-505fdf { padding: 40px; box-sizing: border-box; background-color: rgba(255, 255, 255, 0.9); }
+.isben-style-4459b1 { text-align: center; margin-top: 30px; }
+.isben-style-a6f57b { border: none; cursor: pointer; margin-right: 10px; padding: 10px 20px; font-size: 1rem; }
+.isben-style-6f44c8 { display:inline-block; padding: 10px 20px; text-decoration: none; font-size: 1rem; background-color: #666; }
+.isben-style-6ce57a { padding: 15px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; color: #555; text-align: center; }
+.isben-style-5b2b09 { padding: 15px; font-weight: 600; color: #333; }
+.isben-style-5f3a65 { padding: 15px; color: #666; }
+.isben-style-087bdd { padding: 15px; }
+.isben-style-01e588 { padding: 15px; font-weight: bold; color: #f39c12; font-size: 1.1rem; }
+.isben-style-f39536 { padding: 15px; text-align: center; }
+.isben-style-820c64 { display: inline-block; }
+.isben-style-614cf4 { border-radius: 20px; font-weight: bold; padding: 8px 20px; box-shadow: 0 4px 6px rgba(46, 204, 113, 0.2); }
+.isben-style-c02c7d { margin-right: 5px; }
+.isben-style-a76b7c { font-size: 3rem; color: #2ecc71; margin-bottom: 15px; }
+.isben-style-e7c919 { color: #333; font-weight: bold; }
+.isben-style-b20852 { padding: 30px; text-align: left; height: 100%; box-sizing: border-box; }
+.isben-style-5287f8 { color: #FB4318; font-weight: 700; font-size: 1.2rem; }
+.isben-style-323c95 { font-size: 0.9rem; color: #555; margin-bottom: 15px; }
+.isben-style-7d2d11 { margin-bottom: 5px; }
+.isben-style-28a06c { margin-top: 15px; font-weight: bold; color: #333; }
+.isben-style-fc246c { border-top: 1px solid #ccc; margin: 20px 0; }
+.isben-style-623634 { font-weight: bold; font-size: 0.9rem; color: #333; margin-bottom: 5px; }
+.isben-style-424cce { font-weight: bold; }
+.isben-style-96e9ac { padding: 40px; }
+.isben-style-ff9182 { padding: 40px; text-align: center; height: 100%; box-sizing: border-box; }
+.isben-style-884c7f { color: #FB4318; font-weight: 700; }
+.isben-style-ffbeea { margin-bottom: 25px; }
+.isben-style-199b6f { width: 100%; }
+.isben-style-e94560 { display: block; text-decoration: none; padding: 10px; }
+.isben-style-c5ce35 { padding: 40px; text-align: center; }
+.isben-style-6eb6d7 { color: #333; font-weight: 700; margin-bottom: 5px; text-align: left; display: block; padding-left: 10px; }
+.isben-style-0614e5 { color: #FB4318; font-size: 0.9rem; font-weight: 600; text-decoration: none; }
+.isben-style-a40dc8 { color: #666; font-size: 0.95rem; margin-bottom: 5px; }
+.isben-style-dea7db { display: inline-block; padding: 10px 20px; font-size: 0.9rem; text-decoration: none; width: auto; background: transparent; border: 2px solid #FB4318; color: #FB4318; border-radius: 25px; transition: all 0.3s ease; }
+.isben-style-141f54 { max-width: 900px; margin-top: 20px; margin-bottom: 50px; }
+.isben-style-774632 { padding: 20px; background-color: rgba(255, 255, 255, 0.1); }
+.isben-style-2b8a3e { color: white; margin-bottom: 20px; }
+.isben-style-d22c29 { border: 3px solid rgba(255, 255, 255, 0.2); border-radius: 15px; overflow: hidden; display: flex; justify-content: center; align-items: center; width: 100%; margin: 0 auto; }
+.isben-style-adc0c7 { width: 100%; max-width: 1000px; height: auto; border-radius: 10px; object-fit: cover; }
+.isben-style-c71217 { display: inline-block; text-decoration: none; padding: 10px 30px; font-weight: 600; }
+.isben-style-fa6c8d { display: flex; align-items: center; }
+.isben-style-cb2b28 { flex-direction: column; }
+.isben-style-4d1e5c { max-width: 600px; }
+.isben-style-0c6471 { border-radius: 20px; text-align: center; }
+.isben-style-6dea1e { color: white; text-align: center; padding: 20px; opacity: 0.9; font-size: 0.9rem; }
+.isben-style-ab6f52 { position: fixed; bottom: 20px; right: 20px; z-index: 9999; }
+.isben-style-263135 { width: 60px; height: 60px; border-radius: 50%; background-color: #1a1a1a; color: #FB4318; border: 2px solid #FB4318; font-size: 1.5rem; box-shadow: 0 4px 15px rgba(251,67,24,0.3); cursor: pointer; display: flex; justify-content: center; align-items: center; transition: transform 0.3s; }
+.isben-style-7c5a8c { display: none; position: absolute; bottom: 75px; right: 0; width: 340px; height: 480px; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); border-radius: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.3); overflow: hidden; flex-direction: column; }
+.isben-style-5618a5 { background-color: #1a1a1a; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #FB4318; }
+.isben-style-2c72e7 { color: #FB4318; font-size: 1.2rem; }
+.isben-style-04affe { display: flex; gap: 15px; align-items: center; }
+.isben-style-11822c { font-size: 0.8rem; color: #aaa; }
+.isben-style-107dcf { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; opacity: 0.8; }
+.isben-style-0a8426 { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background-color: #f4f4f4; }
+.isben-style-53efcd { padding: 10px; background: white; border-top: 1px solid #ddd; display: flex; gap: 8px; align-items: center; }
+.isben-style-e3afc9 { background: none; border: none; color: #666; font-size: 1.3rem; cursor: pointer; padding: 5px; transition: color 0.3s; }
+.isben-style-23b156 { flex: 1; padding: 10px 15px; border: 1px solid #ddd; border-radius: 20px; outline: none; font-size: 0.9rem; background: #f9f9f9; }
+.isben-style-0c0eff { background-color: #FB4318; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: background 0.3s; }
+.isben-style-a170d8 { color:#4CAF50; }
+.isben-style-4cd736 { padding: 30px; text-align: left; height: 100%; box-sizing: border-box; position: relative; }
+.isben-style-b0473a { margin-bottom: 15px; }
+.isben-style-86fd43 { background-color: #f8f9fa; border-radius: 10px; padding: 15px; margin-top: 15px; border-left: 4px solid #FB4318; }
+.isben-style-7e7fb6 { margin-bottom: 5px; font-weight: bold; color: #333; }
+.isben-style-b82a9f { padding: 10px 30px; text-decoration: none; }
+.isben-style-7cea88 { padding: 30px; }
+.isben-style-b8c093 { display: inline-block; text-decoration: none; padding: 8px 20px; font-size: 1rem; }
+.isben-style-4bbf3f { background-color: transparent; border: 2px solid white; color: white; border-radius: 25px; padding: 10px 30px; font-weight: 600; }
+.isben-style-c7a6a9 { width: 120px; height: 120px; object-fit: cover; border: 3px solid #FB4318; }
+.isben-style-1f5a0b { width: 120px; height: 120px; color: white; font-size: 3rem; border: 3px solid #FB4318; }
+.isben-style-838095 { border-radius: 12px; }
+.isben-style-53f429 { border-radius: 20px 20px 0 0; background-color: #FB4318; }
+.isben-style-2ecb6b { border-left: 4px solid #FB4318; }
+.isben-style-866f03 { border-left: 4px solid #333; }
+.isben-style-69d366 { border-left: 4px solid #17a2b8; }
+.isben-style-5de14c { border: 1px solid #ddd; }
+.isben-style-fa415b { font-size: 1.5rem; }
+.isben-style-dc89aa { background-color: #FB4318; border: none; border-radius: 20px; font-weight: 600; }
+.isben-style-e77979 { display:inline-block; padding: 10px 20px; text-decoration: none; width: auto; font-size: 1rem; }
+.isben-style-23ddc3 { display:inline-block; padding: 10px 20px; text-decoration: none; width: auto; font-size: 1rem; margin-left: 10px; background-color: #28a745; }
+.isben-style-628dce { max-width: 100%; padding: 40px; box-sizing: border-box; }
+.isben-style-ee75ab { width: 100%; text-align: left; border-collapse: separate; border-spacing: 0 10px; }
+.isben-style-c4b046 { background-color: rgba(255, 255, 255, 0.5); transition: background-color 0.3s; }
+.isben-style-4fe5f8 { padding: 15px; border-radius: 10px 0 0 10px; }
+.isben-style-eef0be { padding: 15px; color: #28a745; font-weight: 700; }
+.isben-style-eba243 { padding: 15px; border-radius: 0 10px 10px 0; }
+.isben-style-41e54b { text-align: center; padding: 20px; color: #666; }
+.isben-style-cddcff { border-radius: 20px; border: none; }
+.isben-style-224b51 { display: none; }
+.isben-style-ee336d { background-color: #FB4318; border: none; border-radius: 15px; padding: 10px 40px; }
+.isben-style-1d4efa { max-width: 1000px; margin-top: 20px; }
+.isben-style-bd8d59 { color: white; text-align: center; }
+.isben-style-ecb23a { padding: 20px; text-align: center; }
+.isben-style-466930 { padding: 10px; display: block; text-decoration: none; font-weight: bold; }
+.isben-style-8201e3 { padding: 10px; display: block; text-decoration: none; }
+.isben-style-1890ac { width: 100%; padding: 10px; }
+.isben-style-c0eb95 { padding: 10px; display: block; text-decoration: none; font-weight: bold; width: 100%; }
+.isben-style-a4601b { max-width: 500px; margin: 0 auto; display: flex; gap: 10px; }
+.isben-style-cb968a { border-radius: 8px; }
+.isben-style-c9dd40 { padding: 10px 20px; border: none; font-weight: bold; }
+.isben-style-a6bb40 { padding: 10px 20px; font-weight: bold; }

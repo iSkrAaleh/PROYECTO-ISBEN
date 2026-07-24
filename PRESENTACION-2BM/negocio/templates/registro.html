@@ -1,0 +1,158 @@
+{% extends 'master.html' %}
+
+{% block title %}Registro de Usuario - ISBEN{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg isben-style-cddcff">
+                <div class="card-header text-white text-center isben-style-53f429">
+                    <h3 class="mb-0">Crear Cuenta en ISBEN</h3>
+                </div>
+                <div class="card-body p-4">
+                    {% if formulario.errors %}
+                        <div class="alert alert-danger">
+                            Por favor corrige los errores resaltados abajo.
+                        </div>
+                    {% endif %}
+                    
+                    <form method="POST">
+                        {% csrf_token %}
+                        
+                        <!-- Datos Básicos -->
+                        <h5 class="mb-3">1. Datos Básicos</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label>Nombre</label>
+                                {{ formulario.first_name }}
+                            </div>
+                            <div class="col-md-6">
+                                <label>Apellido</label>
+                                {{ formulario.last_name }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label>Username</label>
+                                {{ formulario.username }}
+                            </div>
+                            <div class="col-md-6">
+                                <label>Email</label>
+                                {{ formulario.email }}
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label>Contraseña</label>
+                            {{ formulario.password }}
+                        </div>
+
+                        <!-- Rol -->
+                        <h5 class="mb-3">2. Selecciona tu tipo de cuenta</h5>
+                        <div class="mb-4 p-3 rounded isben-style-2f9d52">
+                            {% for radio in formulario.rol %}
+                                <div class="form-check form-check-inline">
+                                    {{ radio.tag }}
+                                    <label class="form-check-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                                </div>
+                            {% endfor %}
+                            <div class="text-danger mt-1">{{ formulario.rol.errors }}</div>
+                        </div>
+
+                        <!-- Campos Dinámicos Empresa -->
+                        <div id="campos_empresa" class="mb-4 p-3 border rounded border-warning isben-style-224b51">
+                            <h5 class="mb-3 text-warning">Datos de Empresa</h5>
+                            <div class="row mb-2">
+                                <div class="col-md-6"><label>RUC</label>{{ formulario.ruc }}<div class="text-danger">{{ formulario.ruc.errors }}</div></div>
+                                <div class="col-md-6"><label>Razón Social</label>{{ formulario.razon_social }}<div class="text-danger">{{ formulario.razon_social.errors }}</div></div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-6"><label>Representante Legal</label>{{ formulario.representante_legal }}<div class="text-danger">{{ formulario.representante_legal.errors }}</div></div>
+                                <div class="col-md-6"><label>Límite Compra Mínimo ($)</label>{{ formulario.limite_compra_minimo }}<div class="text-danger">{{ formulario.limite_compra_minimo.errors }}</div></div>
+                            </div>
+                            
+                            <h5 class="mt-4 mb-3 isben-style-c1e2dc">Elige tu Plan</h5>
+                            <div class="p-3 bg-light rounded">
+                                {% for radio in formulario.plan_empresa %}
+                                    <div class="form-check">
+                                        {{ radio.tag }}
+                                        <label class="form-check-label fw-bold" for="{{ radio.id_for_label }}">
+                                            {{ radio.choice_label }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                                <div class="text-danger mt-1">{{ formulario.plan_empresa.errors }}</div>
+                            </div>
+                        </div>
+
+                        <!-- Campos Dinámicos Vendedor -->
+                        <div id="campos_vendedor" class="mb-4 p-3 border rounded border-info isben-style-224b51">
+                            <h5 class="mb-3 text-info">Datos de Vendedor</h5>
+                            <label>Cédula</label>
+                            {{ formulario.cedula }}
+                            <div class="text-danger">{{ formulario.cedula.errors }}</div>
+                        </div>
+
+                        <!-- Campos Dinámicos Tendero -->
+                        <div id="campos_tendero" class="mb-4 p-3 border rounded border-success isben-style-224b51">
+                            <h5 class="mb-3 text-success">Datos de Tendero</h5>
+                            <div class="row mb-2">
+                                <div class="col-md-6"><label>Nombre del Local</label>{{ formulario.nombre_local }}<div class="text-danger">{{ formulario.nombre_local.errors }}</div></div>
+                                <div class="col-md-6"><label>RUC del Negocio</label>{{ formulario.ruc_negocio }}<div class="text-danger">{{ formulario.ruc_negocio.errors }}</div></div>
+                            </div>
+                            <div class="mb-2"><label>Dirección Física</label>{{ formulario.direccion_fisica }}<div class="text-danger">{{ formulario.direccion_fisica.errors }}</div></div>
+                            <div class="mb-2"><label>Coordenadas GPS (Ej: -0.229, -78.524)</label>{{ formulario.coordenadas_gps }}<div class="text-danger">{{ formulario.coordenadas_gps.errors }}</div></div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg isben-style-ee336d">Crear Cuenta</button>
+                        </div>
+                    </form>
+                    <div class="text-center mt-3">
+                        <a href="{% url 'login' %}">¿Ya tienes cuenta? Inicia sesión aquí</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const radiosRol = document.querySelectorAll('input[name="rol"]');
+        const divEmpresa = document.getElementById('campos_empresa');
+        const divVendedor = document.getElementById('campos_vendedor');
+        const divTendero = document.getElementById('campos_tendero');
+
+        // Agregar clases form-control de Bootstrap
+        document.querySelectorAll('input[type="text"], input[type="password"], input[type="email"], input[type="number"]').forEach(input => {
+            input.classList.add('form-control');
+        });
+
+        function actualizarCampos() {
+            let rolSeleccionado = document.querySelector('input[name="rol"]:checked');
+            
+            divEmpresa.style.display = 'none';
+            divVendedor.style.display = 'none';
+            divTendero.style.display = 'none';
+            
+            if (rolSeleccionado) {
+                if (rolSeleccionado.value === 'EMPRESA') {
+                    divEmpresa.style.display = 'block';
+                } else if (rolSeleccionado.value === 'VENDEDOR') {
+                    divVendedor.style.display = 'block';
+                } else if (rolSeleccionado.value === 'TENDERO') {
+                    divTendero.style.display = 'block';
+                }
+            }
+        }
+
+        radiosRol.forEach(radio => {
+            radio.addEventListener('change', actualizarCampos);
+        });
+        
+        // Ejecutar al cargar
+        actualizarCampos();
+    });
+</script>
+{% endblock %}

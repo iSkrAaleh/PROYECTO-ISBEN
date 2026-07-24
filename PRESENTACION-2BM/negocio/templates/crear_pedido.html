@@ -3,17 +3,17 @@
 {% block title %}Crear Pedido - ISBEN Solutions{% endblock %}
 
 {% block content %}
-<div class="container" style="max-width: 1000px; margin-top: 20px; margin-bottom: 50px;">
+<div class="container isben-style-e38603">
 
   <div class="mb-4">
-    <a href="{% url 'seleccionar_tendero' empresa_id %}" class="btn btn-light" style="border-radius: 20px; font-weight: bold; padding: 8px 20px; color: #FB4318; display: inline-flex; align-items: center; text-decoration: none;">
-      <i class="bi bi-arrow-left-circle-fill" style="margin-right: 8px; font-size: 1.2rem;"></i> Volver a Clientes
+    <a href="{% url 'seleccionar_tendero' empresa_id %}" class="btn btn-light isben-style-eb0b79">
+      <i class="bi bi-arrow-left-circle-fill isben-style-af9af8"></i> Volver a Clientes
     </a>
   </div>
 
-  <div class="text-center mb-5" style="color: white;">
-    <h2 style="font-weight: 800; font-size: 2.5rem;">Catálogo de Productos</h2>
-    <p style="font-size: 1.1rem; opacity: 0.9;">Estás realizando un pedido para: <strong style="color: #FB4318;">{{ tendero.nombre_local }}</strong></p>
+  <div class="text-center mb-5 isben-style-f6234f">
+    <h2 class="isben-style-9aad7c">Catálogo de Productos</h2>
+    <p class="isben-style-1e0220">Estás realizando un pedido para: <strong class="isben-style-c1e2dc">{{ tendero.nombre_local }}</strong></p>
   </div>
 
   <!-- Formulario ÚNICO que envuelve todo el catálogo -->
@@ -25,25 +25,25 @@
       {% for producto in productos %}
       <div class="col-md-4">
         <!-- Tarjeta de Producto -->
-        <div class="glass-card" style="padding: 30px; text-align: center; height: 100%; box-sizing: border-box;">
-          <h4 style="color: #FB4318; font-weight: 700; font-size: 1.3rem;">{{ producto.nombre_producto }}</h4>
+        <div class="glass-card isben-style-dc853f">
+          <h4 class="isben-style-31c239">{{ producto.nombre_producto }}</h4>
           
           <!-- Texto del stock y costo en color oscuro (#333) para que resalte si el fondo es claro -->
-          <p style="margin-bottom: 15px; font-size: 0.95rem; color: #333; font-weight: bold;">
+          <p class="isben-style-ad949e">
             Stock Disponible: {{ producto.stock_actual }}<br>
             Costo Mayorista: ${{ producto.precio_mayorista }}
           </p>
           
           <div class="mb-3 text-start">
             <!-- Label en color oscuro (#333) -->
-            <label style="color: #333; font-size: 0.85rem; font-weight: bold;">Cantidad a pedir (deja vacío si es 0):</label>
+            <label class="isben-style-589c4f">Cantidad a pedir (deja vacío si es 0):</label>
             <!-- Ya NO es required. El name es dinámico: cantidad_ID -->
             <input type="number" name="cantidad_{{ producto.id }}" class="form-control" min="0" max="{{ producto.stock_actual }}">
           </div>
           
           <div class="mb-4 text-start">
             <!-- Label en color oscuro (#333) -->
-            <label style="color: #333; font-size: 0.85rem; font-weight: bold;">Precio Final (Tu venta):</label>
+            <label class="isben-style-589c4f">Precio Final (Tu venta):</label>
             <!-- El name es dinámico: precio_venta_ID -->
             <input type="number" step="0.01" name="precio_venta_{{ producto.id }}" class="form-control" min="{{ producto.precio_mayorista }}" placeholder="Opcional. Ej: {{ producto.precio_mayorista }}">
           </div>
@@ -55,7 +55,7 @@
 
     <!-- Botón general al final de la página -->
     <div class="text-center mt-5">
-      <button type="submit" class="btn-login" style="padding: 15px 40px; font-size: 1.2rem; font-weight: bold; border: none; width: 100%; max-width: 400px;">
+      <button type="submit" class="btn-login isben-style-a9f3f6">
         Confirmar Todo el Pedido
       </button>
     </div>

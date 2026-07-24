@@ -12,24 +12,40 @@
   <link href="{% static 'imagenes/logotigresolologo.png' %}" rel="icon">
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
   <link href="{% static 'css/login.css' %}" rel="stylesheet">
+  <link href="{% static 'css/estilos.css' %}" rel="stylesheet">
 </head>
 
 <body>
 
-  <!-- logo superior izquierdo y menu desplegable -->
-  <div class="dropdown-logo">
-    <a href="{% url 'hub' %}" class="top-left-logo">
+  <!-- logo superior derecho y menu desplegable -->
+  <div class="dropdown-logo isben-style-fa6c8d">
+    {% if request.user.is_authenticated %}
+    <div class="user-info-navbar">
+        <span class="user-name">
+            {% if request.user.first_name %}{{ request.user.get_full_name }}{% else %}{{ request.user.username }}{% endif %}
+        </span>
+        <span class="user-role">
+            {% if request.user.empresa %}Empresa
+            {% elif request.user.vendedor %}Vendedor
+            {% elif request.user.tendero %}Tendero
+            {% else %}Administrador{% endif %}
+        </span>
+    </div>
+    {% endif %}
+    
+    <a href="#" class="top-left-logo">
       <img src="{% static 'imagenes/logotigresolologo.png' %}" alt="ISBEN Logo">
     </a>
+    
     {% if request.user.is_authenticated %}
     <div class="dropdown-content">
-      <a href="#">Mi perfil</a>
-      <a href="#">Configuraciones</a>
-      <a href="{% url 'logout' %}" style="color: #FB4318;">Cerrar sesión</a>
+      <a href="{% url 'perfil' %}">Mi perfil</a>
+      <a href="{% url 'perfil' %}">Configuraciones</a>
+      <a href="{% url 'logout' %}" onclick="sessionStorage.removeItem('tigre_bot_history'); sessionStorage.removeItem('tigre_bot_open');" class="isben-style-c1e2dc">Cerrar sesión</a>
     </div>
     {% endif %}
   </div>
@@ -44,11 +60,11 @@
     {% endif %}
   </nav>
 
-  <main class="main-content" style="flex-direction: column;">
+  <main class="main-content isben-style-cb2b28">
     {% if messages %}
-    <div class="container mt-3" style="max-width: 600px;">
+    <div class="container mt-3 isben-style-4d1e5c">
       {% for message in messages %}
-      <div class="alert alert-info" role="alert" style="border-radius: 20px; text-align: center;">
+      <div class="alert alert-info isben-style-0c6471" role="alert">
         {{ message }}
       </div>
       {% endfor %}
@@ -59,11 +75,225 @@
     {% endblock %}
   </main>
 
-  <footer style="color: white; text-align: center; padding: 20px; opacity: 0.9; font-size: 0.9rem;">
+  <footer class="isben-style-6dea1e">
     <p>© <span>Copyright</span> <strong class="px-1 sitename">ISBEN</strong> <span>Todos los derechos reservados.
         Proyecto 2BM</span></p>
   </footer>
 
-</body>
+  {% if request.user.is_authenticated %}
+  <!-- Tigre Bot Widget -->
+  <div id="tigre-bot-widget" class="isben-style-ab6f52">
+      <!-- Botón Flotante -->
+      <button id="tigre-bot-btn" class="isben-style-263135">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-robot" viewBox="0 0 16 16">
+            <path d="M6 12.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5ZM3 8.062C3 6.76 4.235 5.765 5.53 5.889a28.947 28.947 0 0 1 4.94 0C11.765 5.765 13 6.76 13 8.062v1.157a.933.933 0 0 1-.765.935c-.845.147-2.34.346-4.235.346-1.895 0-3.39-.2-4.235-.346A.933.933 0 0 1 3 9.219V8.062Zm4.542-.827a.25.25 0 0 0-.217.068l-.92.9a24.767 24.767 0 0 1-1.871-.183.25.25 0 0 0-.068.495c.55.076 1.232.149 2.02.193a.25.25 0 0 0 .189-.071l.754-.736.847 1.71a.25.25 0 0 0 .404.062l.932-.97a25.286 25.286 0 0 0 1.922-.188.25.25 0 0 0-.068-.495c-.538.074-1.207.145-1.98.189a.25.25 0 0 0-.166.076l-.754.785-.842-1.7a.25.25 0 0 0-.182-.135Z"/>
+            <path d="M8.5 1.866a1 1 0 1 0-1 0V3h-2A4.5 4.5 0 0 0 1 7.5V8a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1v-.5A4.5 4.5 0 0 0 10.5 3h-2V1.866ZM14 7.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.5A3.5 3.5 0 0 1 5.5 4h5A3.5 3.5 0 0 1 14 7.5Z"/>
+          </svg>
+      </button>
 
+      <!-- Ventana de Chat -->
+      <div id="tigre-bot-chat" class="isben-style-7c5a8c">
+          
+          <!-- Cabecera -->
+          <div class="isben-style-5618a5">
+              <h6 class="mb-0 fw-bold d-flex align-items-center">
+                  <i class="bi bi-robot me-2 isben-style-2c72e7"></i> Tigre Bot
+              </h6>
+              <div class="isben-style-04affe">
+                  <span id="voz-status" class="isben-style-11822c"><i class="bi bi-volume-mute-fill"></i></span>
+                  <button id="tigre-bot-close" class="isben-style-107dcf"><i class="bi bi-x-lg"></i></button>
+              </div>
+          </div>
+
+          <!-- Área de Mensajes -->
+          <div id="tigre-bot-messages" class="isben-style-0a8426">
+              <!-- Mensajes cargados por JS -->
+          </div>
+
+          <!-- Input y Microfono -->
+          <div class="isben-style-53efcd">
+              <button id="tigre-bot-mic" class="isben-style-e3afc9"><i class="bi bi-mic-fill"></i></button>
+              <input type="text" id="tigre-bot-input" placeholder="Escribe o habla aquí..." class="isben-style-23b156">
+              <button id="tigre-bot-send" class="isben-style-0c0eff"><i class="bi bi-send-fill"></i></button>
+          </div>
+      </div>
+  </div>
+
+  <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          const btn = document.getElementById('tigre-bot-btn');
+          const chat = document.getElementById('tigre-bot-chat');
+          const close = document.getElementById('tigre-bot-close');
+          const send = document.getElementById('tigre-bot-send');
+          const input = document.getElementById('tigre-bot-input');
+          const messages = document.getElementById('tigre-bot-messages');
+          const vozStatus = document.getElementById('voz-status');
+          const micBtn = document.getElementById('tigre-bot-mic');
+
+          let chatHistory = JSON.parse(sessionStorage.getItem('tigre_bot_history')) || [
+              { text: "¡Hola! Soy Tigre Bot. Sistema iniciado. ¿En qué te puedo ayudar hoy?", sender: "bot" }
+          ];
+
+          // Restaurar estado de la ventana
+          if(sessionStorage.getItem('tigre_bot_open') === 'true') {
+              chat.style.display = 'flex';
+              input.focus();
+          }
+
+          function renderHistory() {
+              messages.innerHTML = '';
+              chatHistory.forEach(msg => {
+                  renderMessageUI(msg.text, msg.sender);
+              });
+              messages.scrollTop = messages.scrollHeight;
+          }
+
+          function renderMessageUI(text, sender) {
+              const div = document.createElement('div');
+              div.style.padding = '10px 15px';
+              div.style.maxWidth = '85%';
+              div.style.fontSize = '0.9rem';
+              div.style.lineHeight = '1.4';
+              div.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
+              
+              if (sender === 'user') {
+                  div.style.background = '#FB4318';
+                  div.style.color = 'white';
+                  div.style.borderRadius = '15px 15px 0 15px';
+                  div.style.alignSelf = 'flex-end';
+              } else {
+                  div.style.background = 'white';
+                  div.style.color = '#333';
+                  div.style.borderRadius = '15px 15px 15px 0';
+                  div.style.alignSelf = 'flex-start';
+                  div.style.border = '1px solid #eaeaea';
+              }
+              
+              div.textContent = text;
+              messages.appendChild(div);
+              messages.scrollTop = messages.scrollHeight;
+          }
+
+          function addMessage(text, sender) {
+              chatHistory.push({ text, sender });
+              sessionStorage.setItem('tigre_bot_history', JSON.stringify(chatHistory));
+              renderMessageUI(text, sender);
+          }
+
+          // Inicializar chat
+          renderHistory();
+
+          btn.addEventListener('click', () => {
+              const isOpening = chat.style.display === 'none';
+              chat.style.display = isOpening ? 'flex' : 'none';
+              sessionStorage.setItem('tigre_bot_open', isOpening);
+              if(isOpening) input.focus();
+          });
+
+          close.addEventListener('click', () => {
+              chat.style.display = 'none';
+              sessionStorage.setItem('tigre_bot_open', 'false');
+          });
+
+          function speakText(text) {
+              if ('speechSynthesis' in window) {
+                  window.speechSynthesis.cancel();
+                  const utterance = new SpeechSynthesisUtterance(text);
+                  utterance.lang = 'es-ES';
+                  utterance.rate = 1.0;
+                  window.speechSynthesis.speak(utterance);
+              }
+          }
+
+          // Speech Recognition Logic
+          const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+          if (SpeechRecognition) {
+              const recognition = new SpeechRecognition();
+              recognition.lang = 'es-ES';
+              recognition.interimResults = false;
+              recognition.maxAlternatives = 1;
+
+              recognition.onstart = function() {
+                  micBtn.style.color = '#FB4318';
+                  input.placeholder = "Escuchando...";
+              };
+
+              recognition.onspeechend = function() {
+                  recognition.stop();
+              };
+
+              recognition.onresult = function(event) {
+                  const transcript = event.results[0][0].transcript;
+                  input.value = transcript;
+                  micBtn.style.color = '#666';
+                  input.placeholder = "Escribe o habla aquí...";
+                  sendMessage(); // Autosen after voice
+              };
+
+              recognition.onerror = function(event) {
+                  micBtn.style.color = '#666';
+                  input.placeholder = "Escribe o habla aquí...";
+              };
+
+              micBtn.addEventListener('click', () => {
+                  recognition.start();
+              });
+          } else {
+              micBtn.style.display = 'none';
+          }
+
+          async function sendMessage() {
+              const text = input.value.trim();
+              if (!text) return;
+              
+              addMessage(text, 'user');
+              input.value = '';
+              
+              const loadingId = 'loading-' + Date.now();
+              const loadingDiv = document.createElement('div');
+              loadingDiv.id = loadingId;
+              loadingDiv.style.alignSelf = 'flex-start';
+              loadingDiv.style.fontSize = '0.8rem';
+              loadingDiv.style.color = '#888';
+              loadingDiv.innerHTML = '<i class="bi bi-three-dots"></i> Procesando...';
+              messages.appendChild(loadingDiv);
+              messages.scrollTop = messages.scrollHeight;
+
+              try {
+                  const response = await fetch('/api/tigre-bot/', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({ pregunta: text })
+                  });
+                  
+                  const data = await response.json();
+                  document.getElementById(loadingId).remove();
+                  
+                  if (data.respuesta) {
+                      addMessage(data.respuesta, 'bot');
+                      
+                      if(data.hablar) {
+                          vozStatus.innerHTML = '<i class="bi bi-volume-up-fill isben-style-a170d8"></i>';
+                          speakText(data.respuesta);
+                      } else {
+                          vozStatus.innerHTML = '<i class="bi bi-volume-mute-fill"></i>';
+                      }
+                  }
+              } catch (e) {
+                  document.getElementById(loadingId).remove();
+                  addMessage('Error de conexión con los sistemas centrales.', 'bot');
+              }
+          }
+
+          send.addEventListener('click', sendMessage);
+          input.addEventListener('keypress', function(e) {
+              if (e.key === 'Enter') sendMessage();
+          });
+      });
+  </script>
+  {% endif %}
+
+</body>
 </html>

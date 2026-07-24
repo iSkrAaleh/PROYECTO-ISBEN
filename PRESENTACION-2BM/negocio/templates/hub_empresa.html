@@ -3,52 +3,63 @@
 {% block title %}Panel de Empresa - ISBEN Solutions{% endblock %}
 
 {% block content %}
-<div class="container" style="max-width: 1000px; margin-top: 20px; margin-bottom: 50px;">
+<div class="container isben-style-e38603">
 
-  <div class="text-center mb-5" style="color: white;">
-    <h2 style="font-weight: 800; font-size: 2.5rem;">Panel de Empresa</h2>
-    <p style="font-size: 1.1rem; opacity: 0.9;">Bienvenido, <strong>{{ nombre_usuario }}</strong>.</p>
+  <div class="text-center mb-5 isben-style-f6234f">
+    <h2 class="isben-style-9aad7c">Panel de Empresa</h2>
+    <p class="isben-style-1e0220">Bienvenido, <strong>{{ nombre_usuario }}</strong>.</p>
   </div>
 
   <div class="row gy-4">
 
     <div class="col-md-4">
-      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
-        <h3 style="color: #FB4318; font-weight: 700;">Gestión de Inventario</h3>
-        <p style="margin-bottom: 25px;">Controla el stock de tus productos en tiempo real.</p>
-        <div class="mt-auto" style="width: 100%;">
-          <a href="{% url 'listar_productos_empresa' %}" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Ver Inventario</a>
+      <div class="glass-card isben-style-ff9182">
+        <h3 class="isben-style-884c7f">Gestión de Inventario</h3>
+        <p class="isben-style-ffbeea">Controla el stock de tus productos en tiempo real.</p>
+        <div class="mt-auto isben-style-199b6f">
+          <a href="{% url 'listar_productos_empresa' %}" class="btn-login isben-style-e94560">Ver Inventario</a>
         </div>
       </div>
     </div>
 
     <div class="col-md-4">
-      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
-        <h3 style="color: #FB4318; font-weight: 700;">Catálogo de Productos</h3>
-        <p style="margin-bottom: 25px;">Añade o modifica los productos que ofreces.</p>
-        <div class="mt-auto" style="width: 100%;">
-          <a href="#" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Ver Productos</a>
+      <div class="glass-card isben-style-ff9182">
+        <h3 class="isben-style-884c7f">Catálogo de Productos</h3>
+        <p class="isben-style-ffbeea">Añade o modifica los productos que ofreces.</p>
+        <div class="mt-auto isben-style-199b6f">
+          <a href="{% url 'crear_producto' %}" class="btn-login isben-style-e94560">Agregar Producto</a>
         </div>
       </div>
     </div>
 
     <div class="col-md-4">
-      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
-        <h3 style="color: #FB4318; font-weight: 700;">Recepción de Pedidos</h3>
-        <p style="margin-bottom: 25px;">Revisa los pedidos realizados por tenderos o vendedores.</p>
-        <div class="mt-auto" style="width: 100%;">
-          <a href="{% url 'gestionar_pedidos_empresa' %}" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Ver Pedidos</a>
+      <div class="glass-card isben-style-ff9182">
+        <h3 class="isben-style-884c7f">Recepción de Pedidos</h3>
+        <p class="isben-style-ffbeea">Revisa los pedidos realizados por tenderos o vendedores.</p>
+        <div class="mt-auto isben-style-199b6f">
+          <a href="{% url 'gestionar_pedidos_empresa' %}" class="btn-login isben-style-e94560">Ver Pedidos</a>
         </div>
       </div>
     </div>
 
     <!-- Nueva tarjeta para solicitudes -->
     <div class="col-md-4">
-      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
-        <h3 style="color: #FB4318; font-weight: 700;">Solicitudes de Vendedores</h3>
-        <p style="margin-bottom: 25px;">Aprueba o rechaza a los vendedores que quieren trabajar contigo.</p>
-        <div class="mt-auto" style="width: 100%;">
-          <a href="{% url 'revisar_solicitudes' %}" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Ver Solicitudes</a>
+      <div class="glass-card isben-style-ff9182">
+        <h3 class="isben-style-884c7f">Solicitudes de Vendedores</h3>
+        <p class="isben-style-ffbeea">Aprueba o rechaza a los vendedores que quieren trabajar contigo.</p>
+        <div class="mt-auto isben-style-199b6f">
+          <a href="{% url 'revisar_solicitudes' %}" class="btn-login isben-style-e94560">Ver Solicitudes</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nueva tarjeta para gestión de comisiones -->
+    <div class="col-md-4">
+      <div class="glass-card isben-style-ff9182">
+        <h3 class="isben-style-884c7f">Gestión de Comisiones</h3>
+        <p class="isben-style-ffbeea">Revisa las comisiones pendientes y realiza la liquidación a tus vendedores.</p>
+        <div class="mt-auto isben-style-199b6f">
+          <a href="{% url 'gestionar_comisiones_empresa' %}" class="btn-login isben-style-e94560">Ver Comisiones</a>
         </div>
       </div>
     </div>

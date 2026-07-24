@@ -3,32 +3,32 @@
 {% block title %}Hub - ISBEN Solutions{% endblock %}
 
 {% block content %}
-<div class="container" style="max-width: 1000px; margin-top: 20px; margin-bottom: 50px;">
+<div class="container isben-style-e38603">
 
-  <div class="text-center mb-5" style="color: white;">
-    <h2 style="font-weight: 800; font-size: 2.5rem;">Panel Principal</h2>
-    <p style="font-size: 1.1rem; opacity: 0.9;">Bienvenido, <strong>{{ nombre_usuario }}</strong>.</p>
+  <div class="text-center mb-5 isben-style-f6234f">
+    <h2 class="isben-style-9aad7c">Panel Principal</h2>
+    <p class="isben-style-1e0220">Bienvenido, <strong>{{ nombre_usuario }}</strong>.</p>
   </div>
 
   <div class="row gy-4">
 
     {% if tipo_usuario == 'Empresa' %}
     <div class="col-md-6">
-      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
-        <h3 style="color: #FB4318; font-weight: 700;">Gestión de Empresa</h3>
-        <p style="margin-bottom: 25px;">Visualiza el estado de verificación y los límites de compra.</p>
-        <div class="mt-auto" style="width: 100%;">
-          <a href="#" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Ver Detalles</a>
+      <div class="glass-card isben-style-ff9182">
+        <h3 class="isben-style-884c7f">Gestión de Empresa</h3>
+        <p class="isben-style-ffbeea">Visualiza el estado de verificación y los límites de compra.</p>
+        <div class="mt-auto isben-style-199b6f">
+          <a href="#" class="btn-login isben-style-e94560">Ver Detalles</a>
         </div>
       </div>
     </div>
 
     <div class="col-md-6">
-      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
-        <h3 style="color: #FB4318; font-weight: 700;">Suscripciones</h3>
-        <p style="margin-bottom: 25px;">Administra los planes y pagos de la empresa.</p>
-        <div class="mt-auto" style="width: 100%;">
-          <a href="#" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Ver
+      <div class="glass-card isben-style-ff9182">
+        <h3 class="isben-style-884c7f">Suscripciones</h3>
+        <p class="isben-style-ffbeea">Administra los planes y pagos de la empresa.</p>
+        <div class="mt-auto isben-style-199b6f">
+          <a href="#" class="btn-login isben-style-e94560">Ver
             Suscripciones</a>
         </div>
       </div>
@@ -36,51 +36,51 @@
 
     {% elif tipo_usuario == 'Vendedor' %}
     <div class="col-md-6">
-      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
-        <h3 style="color: #FB4318; font-weight: 700;">Panel de Vendedor</h3>
-        <p style="margin-bottom: 25px;">Revisa el estado de aprobación y notas de capacitación.</p>
-        <div class="mt-auto" style="width: 100%;">
-          <a href="#" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Ver Panel</a>
+      <div class="glass-card isben-style-ff9182">
+        <h3 class="isben-style-884c7f">Panel de Vendedor</h3>
+        <p class="isben-style-ffbeea">Revisa el estado de aprobación y notas de capacitación.</p>
+        <div class="mt-auto isben-style-199b6f">
+          <a href="#" class="btn-login isben-style-e94560">Ver Panel</a>
         </div>
       </div>
     </div>
 
     <div class="col-md-6">
-      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
-        <h3 style="color: #FB4318; font-weight: 700;">Rutas Asignadas</h3>
-        <p style="margin-bottom: 25px;">Organiza tus visitas a tenderos.</p>
-        <div class="mt-auto" style="width: 100%;">
-          <a href="#" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Ver Rutas</a>
+      <div class="glass-card isben-style-ff9182">
+        <h3 class="isben-style-884c7f">Rutas Asignadas</h3>
+        <p class="isben-style-ffbeea">Organiza tus visitas a tenderos.</p>
+        <div class="mt-auto isben-style-199b6f">
+          <a href="#" class="btn-login isben-style-e94560">Ver Rutas</a>
         </div>
       </div>
     </div>
 
     {% elif tipo_usuario == 'Tendero' %}
     <div class="col-md-6">
-      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
-        <h3 style="color: #FB4318; font-weight: 700;">Mi Negocio</h3>
-        <p style="margin-bottom: 25px;">Actualiza la información de tu local.</p>
-        <div class="mt-auto" style="width: 100%;">
-          <a href="#" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Gestionar
+      <div class="glass-card isben-style-ff9182">
+        <h3 class="isben-style-884c7f">Mi Negocio</h3>
+        <p class="isben-style-ffbeea">Actualiza la información de tu local.</p>
+        <div class="mt-auto isben-style-199b6f">
+          <a href="#" class="btn-login isben-style-e94560">Gestionar
             Negocio</a>
         </div>
       </div>
     </div>
 
     <div class="col-md-6">
-      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
-        <h3 style="color: #FB4318; font-weight: 700;">Catálogo ISBEN</h3>
-        <p style="margin-bottom: 25px;">Explora los productos disponibles.</p>
-        <div class="mt-auto" style="width: 100%;">
-          <a href="#" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Ver Catálogo</a>
+      <div class="glass-card isben-style-ff9182">
+        <h3 class="isben-style-884c7f">Catálogo ISBEN</h3>
+        <p class="isben-style-ffbeea">Explora los productos disponibles.</p>
+        <div class="mt-auto isben-style-199b6f">
+          <a href="#" class="btn-login isben-style-e94560">Ver Catálogo</a>
         </div>
       </div>
     </div>
 
     {% else %}
     <div class="col-md-12">
-      <div class="glass-card" style="padding: 40px; text-align: center;">
-        <h3 style="color: #FB4318; font-weight: 700;">Información</h3>
+      <div class="glass-card isben-style-c5ce35">
+        <h3 class="isben-style-884c7f">Información</h3>
         <p>No se ha detectado un rol de Empresa, Vendedor o Tendero asociado a este usuario. Rol actual: Administrador u
           otro.</p>
       </div>

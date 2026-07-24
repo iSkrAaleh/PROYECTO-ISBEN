@@ -3,41 +3,41 @@
 {% block title %}Panel de Vendedor - ISBEN Solutions{% endblock %}
 
 {% block content %}
-<div class="container" style="max-width: 1000px; margin-top: 20px; margin-bottom: 50px;">
+<div class="container isben-style-e38603">
 
-  <div class="text-center mb-5" style="color: white;">
-    <h2 style="font-weight: 800; font-size: 2.5rem;">Panel de Ventas</h2>
-    <p style="font-size: 1.1rem; opacity: 0.9;">Bienvenido, <strong>{{ nombre_usuario }}</strong>.</p>
+  <div class="text-center mb-5 isben-style-f6234f">
+    <h2 class="isben-style-9aad7c">Panel de Ventas</h2>
+    <p class="isben-style-1e0220">Bienvenido, <strong>{{ nombre_usuario }}</strong>.</p>
   </div>
 
   <div class="row gy-4">
 
     <div class="col-md-4">
-      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
-        <h3 style="color: #FB4318; font-weight: 700;">Realizar Pedido</h3>
-        <p style="margin-bottom: 25px;">Ingresa un pedido en nombre de un tendero de tu ruta.</p>
-        <div class="mt-auto" style="width: 100%;">
-          <a href="{% url 'seleccionar_empresa' %}" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Nuevo Pedido</a>
+      <div class="glass-card isben-style-ff9182">
+        <h3 class="isben-style-884c7f">Realizar Pedido</h3>
+        <p class="isben-style-ffbeea">Ingresa un pedido en nombre de un tendero de tu ruta.</p>
+        <div class="mt-auto isben-style-199b6f">
+          <a href="{% url 'seleccionar_empresa' %}" class="btn-login isben-style-e94560">Nuevo Pedido</a>
         </div>
       </div>
     </div>
 
     <div class="col-md-4">
-      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
-        <h3 style="color: #FB4318; font-weight: 700;">Rutas y Clientes</h3>
-        <p style="margin-bottom: 25px;">Organiza tus visitas y gestiona a tus clientes asignados.</p>
-        <div class="mt-auto" style="width: 100%;">
-          <a href="#" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Ver Rutas</a>
+      <div class="glass-card isben-style-ff9182">
+        <h3 class="isben-style-884c7f">Rutas y Clientes</h3>
+        <p class="isben-style-ffbeea">Organiza tus visitas y gestiona a tus clientes asignados.</p>
+        <div class="mt-auto isben-style-199b6f">
+          <a href="{% url 'mis_rutas' %}" class="btn-login isben-style-e94560">Ver Rutas</a>
         </div>
       </div>
     </div>
 
     <div class="col-md-4">
-      <div class="glass-card" style="padding: 40px; text-align: center; height: 100%; box-sizing: border-box;">
-        <h3 style="color: #FB4318; font-weight: 700;">Mis Comisiones</h3>
-        <p style="margin-bottom: 25px;">Revisa las comisiones ganadas por tus ventas exitosas.</p>
-        <div class="mt-auto" style="width: 100%;">
-          <a href="#" class="btn-login" style="display: block; text-decoration: none; padding: 10px;">Ver Comisiones</a>
+      <div class="glass-card isben-style-ff9182">
+        <h3 class="isben-style-884c7f">Mis Comisiones</h3>
+        <p class="isben-style-ffbeea">Revisa las comisiones ganadas por tus ventas exitosas.</p>
+        <div class="mt-auto isben-style-199b6f">
+          <a href="{% url 'ver_comisiones_vendedor' %}" class="btn-login isben-style-e94560">Ver Comisiones</a>
         </div>
       </div>
     </div>

@@ -1,59 +1,59 @@
 {% extends "master.html" %}
 {% block content %}
-<div class="container" style="max-width: 1000px; margin-top: 20px; margin-bottom: 50px;">
+<div class="container isben-style-e38603">
   
   <div class="mb-4">
-    <a href="{% url 'hub' %}" class="btn btn-light" style="border-radius: 20px; font-weight: bold; padding: 8px 20px; color: #FB4318; display: inline-flex; align-items: center; text-decoration: none;">
-      <i class="bi bi-arrow-left-circle-fill" style="margin-right: 8px; font-size: 1.2rem;"></i> Volver al Panel
+    <a href="{% url 'hub' %}" class="btn btn-light isben-style-eb0b79">
+      <i class="bi bi-arrow-left-circle-fill isben-style-af9af8"></i> Volver al Panel
     </a>
   </div>
 
-  <div class="text-center mb-5" style="color: white;">
-    <h2 style="font-weight: 800; font-size: 2.5rem;">Gestión de Pedidos</h2>
-    <p style="font-size: 1.1rem; opacity: 0.9;">Controla los pedidos recibidos y actualiza su estado de entrega.</p>
+  <div class="text-center mb-5 isben-style-f6234f">
+    <h2 class="isben-style-9aad7c">Gestión de Pedidos</h2>
+    <p class="isben-style-1e0220">Controla los pedidos recibidos y actualiza su estado de entrega.</p>
   </div>
 
   <div class="row gy-4">
     {% if pedidos %}
         {% for pedido in pedidos %}
         <div class="col-md-6">
-          <div class="glass-card" style="padding: 30px; text-align: left; height: 100%; box-sizing: border-box;">
+          <div class="glass-card isben-style-b20852">
             
-            <h4 style="color: #FB4318; font-weight: 700; font-size: 1.2rem;">Pedido #{{ pedido.id }}</h4>
-            <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px;">{{ pedido.fecha_hora_emision }}</p>
+            <h4 class="isben-style-5287f8">Pedido #{{ pedido.id }}</h4>
+            <p class="isben-style-323c95">{{ pedido.fecha_hora_emision }}</p>
             
-            <p style="margin-bottom: 5px;"><strong>Total:</strong> ${{ pedido.total_pedido }}</p>
-            <p style="margin-bottom: 5px;"><strong>Plataforma:</strong> {{ pedido.metodo_generacion }}</p>
+            <p class="isben-style-7d2d11"><strong>Total:</strong> ${{ pedido.total_pedido }}</p>
+            <p class="isben-style-7d2d11"><strong>Plataforma:</strong> {{ pedido.metodo_generacion }}</p>
             
             {% if pedido.tendero %}
-                <p style="margin-bottom: 5px;"><strong>Cliente:</strong> {{ pedido.tendero.nombre_local }}</p>
+                <p class="isben-style-7d2d11"><strong>Cliente:</strong> {{ pedido.tendero.nombre_local }}</p>
             {% endif %}
             
             {% if pedido.vendedor %}
-                <p style="margin-bottom: 5px;"><strong>Vendedor:</strong> {{ pedido.vendedor.usuario.first_name }} {{ pedido.vendedor.usuario.last_name }}</p>
+                <p class="isben-style-7d2d11"><strong>Vendedor:</strong> {{ pedido.vendedor.usuario.first_name }} {{ pedido.vendedor.usuario.last_name }}</p>
             {% endif %}
             
             <!-- Estado Actual Resaltado -->
-            <p style="margin-top: 15px; font-weight: bold; color: #333;">Estado Actual:</p>
+            <p class="isben-style-28a06c">Estado Actual:</p>
             <p>
                 {% if pedido.estado_pedido == 'Recibido por Empresa' %}
-                    <span class="badge bg-secondary" style="font-size: 0.9rem;">Recibido por Empresa (En Cola)</span>
+                    <span class="badge bg-secondary isben-style-33dd45">Recibido por Empresa (En Cola)</span>
                 {% elif pedido.estado_pedido == 'Preparando Envío' %}
-                    <span class="badge bg-warning text-dark" style="font-size: 0.9rem;">Preparando Envío</span>
+                    <span class="badge bg-warning text-dark isben-style-33dd45">Preparando Envío</span>
                 {% elif pedido.estado_pedido == 'En Camino' %}
-                    <span class="badge bg-primary" style="font-size: 0.9rem;">En Camino al Cliente</span>
+                    <span class="badge bg-primary isben-style-33dd45">En Camino al Cliente</span>
                 {% elif pedido.estado_pedido == 'Entregado' %}
-                    <span class="badge bg-success" style="font-size: 0.9rem;">Entregado Exitosamente</span>
+                    <span class="badge bg-success isben-style-33dd45">Entregado Exitosamente</span>
                 {% else %}
-                    <span class="badge bg-info" style="font-size: 0.9rem;">{{ pedido.estado_pedido }}</span>
+                    <span class="badge bg-info isben-style-33dd45">{{ pedido.estado_pedido }}</span>
                 {% endif %}
             </p>
 
-            <hr style="border-top: 1px solid #ccc; margin: 20px 0;">
+            <hr class="isben-style-fc246c">
             
             <form action="{% url 'actualizar_estado_pedido' pedido.id %}" method="POST">
                 {% csrf_token %}
-                <label style="font-weight: bold; font-size: 0.9rem; color: #333; margin-bottom: 5px;">Cambiar Estado a:</label>
+                <label class="isben-style-623634">Cambiar Estado a:</label>
                 <div class="input-group">
                     <select name="nuevo_estado" class="form-select" required>
                         <option value="">-- Selecciona --</option>
@@ -63,7 +63,7 @@
                         <option value="Entregado">Entregado Exitosamente</option>
                         <option value="Cancelado">Cancelado</option>
                     </select>
-                    <button type="submit" class="btn btn-dark" style="font-weight: bold;">Actualizar</button>
+                    <button type="submit" class="btn btn-dark isben-style-424cce">Actualizar</button>
                 </div>
             </form>
 
@@ -72,8 +72,8 @@
         {% endfor %}
     {% else %}
         <div class="col-12 text-center">
-            <div class="glass-card" style="padding: 40px;">
-                <h4 style="color: #FB4318;">No hay pedidos en la bandeja</h4>
+            <div class="glass-card isben-style-96e9ac">
+                <h4 class="isben-style-c1e2dc">No hay pedidos en la bandeja</h4>
                 <p>Tu empresa no ha recibido pedidos recientemente.</p>
             </div>
         </div>
